@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Come Usare il Registro Excel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .step {
+            margin: 30px 0;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+        }
+
+        .step h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .step-content {
+            color: #2c3e50;
+            line-height: 1.8;
+        }
+
+        .step-content ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-content li {
+            margin: 8px 0;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .button-demo {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #16a085;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+
+        .button-demo:hover {
+            background: #138d75;
+            transform: translateY(-2px);
+        }
+
+        .button-demo.orange {
+            background: #d35400;
+        }
+
+        .button-demo.orange:hover {
+            background: #ba4a00;
+        }
+
+        .example-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #3498db;
+        }
+
+        .example-box h3 {
+            color: #3498db;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .workflow-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            min-width: 150px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: #3498db;
+        }
+
+        .cta {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            color: white;
+        }
+
+        .cta h2 {
+            margin-bottom: 15px;
+        }
+
+        .cta a {
+            display: inline-block;
+            padding: 15px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .cta a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature {
+            padding: 20px;
+            background: #e8f4f8;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .feature h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Demo - Registro Excel per Valutazione Temi</h1>
+        <p class="subtitle">Guida rapida all'utilizzo del sistema di registro cumulativo</p>
+
+        <div class="step">
+            <h2><span class="step-number">1</span> Valuta il Primo Studente</h2>
+            <div class="step-content">
+                <p>Apri l'applicazione e compila i dati dello studente:</p>
+                <ul>
+                    <li>Nome e Cognome: <span class="highlight">Mario Rossi</span></li>
+                    <li>Classe: <span class="highlight">1A</span></li>
+                    <li>Data: <span class="highlight">15/11/2024</span></li>
+                    <li>Traccia: <span class="highlight">"L'importanza dell'amicizia"</span></li>
+                </ul>
+                <p style="margin-top: 15px;">Seleziona i livelli per ogni criterio e aggiungi eventuali note.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">2</span> Aggiungi al Registro</h2>
+            <div class="step-content">
+                <p>Una volta completata la valutazione, clicca sul pulsante:</p>
+                <a href="#" class="button-demo" onclick="return false;">📊 Aggiungi a Registro Excel</a>
+                <div class="example-box">
+                    <h3>✅ Cosa succede:</h3>
+                    <ul>
+                        <li>La valutazione viene salvata nel registro locale</li>
+                        <li>Ricevi una notifica di conferma</li>
+                        <li>Il form si resetta automaticamente per il prossimo studente</li>
+                        <li>Le statistiche della classe si aggiornano in tempo reale</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">3</span> Ripeti per Tutti gli Studenti</h2>
+            <div class="step-content">
+                <p>Continua a valutare tema dopo tema:</p>
+                <div class="workflow">
+                    <div class="workflow-item">
+                        <div>📝</div>
+                        <div>Valuta</div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="workflow-item">
+                        <div>💾</div>
+                        <div>Salva</div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="workflow-item">
+                        <div>🔄</div>
+                        <div>Ripeti</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px;">
+                    Il registro accumula tutte le valutazioni. Puoi lavorare in più sessioni:
+                    i dati rimangono salvati nel browser!
+                </p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">4</span> Visualizza il Registro (Opzionale)</h2>
+            <div class="step-content">
+                <p>In qualsiasi momento puoi controllare il registro:</p>
+                <a href="#" class="button-demo" onclick="return false;">👁️ Mostra/Nascondi Registro</a>
+                <div class="example-box">
+                    <h3>📊 Visualizzi:</h3>
+                    <ul>
+                        <li><strong>Statistiche in tempo reale</strong>: numero valutazioni, media classe, media voti</li>
+                        <li><strong>Tabella completa</strong>: tutti gli studenti con punteggi dettagliati</li>
+                        <li><strong>Azioni rapide</strong>: visualizza dettagli o elimina singole valutazioni</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">5</span> Scarica il File Excel</h2>
+            <div class="step-content">
+                <p>Quando hai completato tutte le valutazioni, esporta il registro:</p>
+                <a href="#" class="button-demo orange" onclick="return false;">📥 Scarica Registro Completo Excel</a>
+
+                <div class="example-box">
+                    <h3>📄 Il file Excel contiene:</h3>
+                    <p><strong>Foglio 1 - Registro Valutazioni</strong></p>
+                    <ul>
+                        <li>Tabella con tutti gli studenti</li>
+                        <li>Punteggi per ogni criterio</li>
+                        <li>Totale e voto finale</li>
+                        <li>Statistiche classe (media, distribuzione giudizi)</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Foglio 2 - Dettagli Completi</strong></p>
+                    <ul>
+                        <li>Valutazione dettagliata per ogni studente</li>
+                        <li>Descrittori qualitativi per ogni criterio</li>
+                        <li>Note complete del docente</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 40px; color: #2c3e50;">🎯 Caratteristiche Principali</h2>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">💾</div>
+                <h3>Salvataggio Automatico</h3>
+                <p>I dati persistono nel browser. Puoi chiudere e riaprire l'app senza perdere nulla.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3>Statistiche Live</h3>
+                <p>Media classe e distribuzione voti si aggiornano automaticamente.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📥</div>
+                <h3>Excel Professionale</h3>
+                <p>File .xlsx formattato e pronto da condividere con studenti e segreteria.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h3>Privacy Totale</h3>
+                <p>Tutto funziona in locale. Nessun dato viene inviato online.</p>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h2>Pronto per Iniziare?</h2>
+            <p>Apri l'applicazione e inizia a valutare i temi della tua classe!</p>
+            <a href="index.html">🚀 Apri Griglia di Valutazione</a>
+        </div>
+    </div>
+</body>
+</html>

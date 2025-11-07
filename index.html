@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Griglia di Valutazione - Tema d'Italiano | Liceo Scienze Umane</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- SheetJS Library for Excel Export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Griglie di Valutazione - Italiano</h1>
+            <p class="subtitle">Liceo delle Scienze Umane - Biennio</p>
+            <p class="methodology">Metodologia: Tassonomia di Bloom + Rubric AAC&U + Indicazioni MIUR</p>
+        </header>
+
+        <!-- Menu Selezione Griglia -->
+        <div class="grid-selector">
+            <h2>🎯 Seleziona Tipologia di Prova</h2>
+            <div class="grid-buttons">
+                <button class="grid-btn active" onclick="selectGrid('tema')" id="btn-tema">
+                    📝 Tema / Testo Argomentativo
+                </button>
+                <button class="grid-btn" onclick="selectGrid('riassunto')" id="btn-riassunto">
+                    📄 Riassunto Testo in Prosa
+                </button>
+                <button class="grid-btn" onclick="selectGrid('grammatica')" id="btn-grammatica">
+                    📚 Verifica Grammatica Italiana
+                </button>
+                <button class="grid-btn" onclick="selectGrid('latino')" id="btn-latino">
+                    🏛️ Verifica Latino (Verbi + I Decl.)
+                </button>
+                <button class="grid-btn disabled" onclick="selectGrid('analisi')" id="btn-analisi">
+                    🔍 Analisi del Testo (Coming Soon)
+                </button>
+            </div>
+            <div class="current-grid-info" id="currentGridInfo">
+                <strong>Griglia Attiva:</strong> <span id="currentGridName">Tema / Testo Argomentativo</span>
+            </div>
+        </div>
+
+        <div class="student-info">
+            <div class="info-group">
+                <label for="studentName">Nome e Cognome:</label>
+                <input type="text" id="studentName" placeholder="Inserisci nome studente">
+            </div>
+            <div class="info-group">
+                <label for="className">Classe:</label>
+                <input type="text" id="className" placeholder="Es. 1A">
+            </div>
+            <div class="info-group">
+                <label for="assignmentDate">Data:</label>
+                <input type="date" id="assignmentDate">
+            </div>
+            <div class="info-group">
+                <label for="topic">Traccia/Argomento:</label>
+                <input type="text" id="topic" placeholder="Es. Titolo del tema / Titolo testo da riassumere">
+            </div>
+        </div>
+
+        <!-- GRIGLIA TEMA -->
+        <div class="evaluation-grid grid-tema" id="grid-tema">
+            <!-- Criterio 1: Contenuto e Pertinenza -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">1.</span> Contenuto e Pertinenza alla Traccia
+                    <span class="criterion-weight">(Max 25 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di comprendere e sviluppare il tema proposto in modo aderente e significativo
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion1" value="8" data-descriptor="Eccellente comprensione della traccia, contenuto ricco, approfondito e originale. Apporti personali significativi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">23-25</span>
+                            </div>
+                            <p class="level-description">Eccellente comprensione della traccia, contenuto ricco, approfondito e originale. Apporti personali significativi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1" value="7" data-descriptor="Buona comprensione della traccia, contenuto adeguato e ben sviluppato con alcuni spunti personali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">20-22</span>
+                            </div>
+                            <p class="level-description">Buona comprensione della traccia, contenuto adeguato e ben sviluppato con alcuni spunti personali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1" value="6" data-descriptor="Discreta comprensione della traccia, contenuto essenziale ma pertinente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">17-19</span>
+                            </div>
+                            <p class="level-description">Discreta comprensione della traccia, contenuto essenziale ma pertinente.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1" value="5" data-descriptor="Sufficiente comprensione della traccia, contenuto basilare e parzialmente sviluppato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Sufficiente comprensione della traccia, contenuto basilare e parzialmente sviluppato.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1" value="4" data-descriptor="Comprensione parziale della traccia, contenuto limitato e poco sviluppato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Comprensione parziale della traccia, contenuto limitato e poco sviluppato.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1" value="3" data-descriptor="Scarsa comprensione della traccia, contenuto superficiale e poco pertinente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">8-11</span>
+                            </div>
+                            <p class="level-description">Scarsa comprensione della traccia, contenuto superficiale e poco pertinente.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1" value="2" data-descriptor="Mancata comprensione della traccia, contenuto frammentario e non pertinente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">4-7</span>
+                            </div>
+                            <p class="level-description">Mancata comprensione della traccia, contenuto frammentario e non pertinente.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 2: Organizzazione e Coerenza -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">2.</span> Organizzazione e Coerenza Testuale
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la struttura del testo, l'organizzazione logica delle idee e la coerenza complessiva
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion2" value="8" data-descriptor="Struttura eccellente, argomentazione logica e ben articolata. Perfetta coerenza tra le parti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Struttura eccellente, argomentazione logica e ben articolata. Perfetta coerenza tra le parti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2" value="7" data-descriptor="Buona organizzazione, argomentazione chiara e coerente con adeguati collegamenti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona organizzazione, argomentazione chiara e coerente con adeguati collegamenti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2" value="6" data-descriptor="Discreta organizzazione, argomentazione generalmente logica con qualche salto.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Discreta organizzazione, argomentazione generalmente logica con qualche salto.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2" value="5" data-descriptor="Organizzazione essenziale, argomentazione semplice ma sostanzialmente coerente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Organizzazione essenziale, argomentazione semplice ma sostanzialmente coerente.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2" value="4" data-descriptor="Organizzazione poco chiara, argomentazione con diverse incoerenze.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Organizzazione poco chiara, argomentazione con diverse incoerenze.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2" value="3" data-descriptor="Organizzazione confusa, argomentazione disorganica e incoerente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Organizzazione confusa, argomentazione disorganica e incoerente.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2" value="2" data-descriptor="Mancanza di organizzazione, argomentazione frammentaria e contraddittoria.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancanza di organizzazione, argomentazione frammentaria e contraddittoria.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 3: Competenza Morfosintattica -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">3.</span> Competenza Morfosintattica e Correttezza Grammaticale
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la correttezza grammaticale, sintattica e morfologica del testo
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion3" value="8" data-descriptor="Forma pienamente corretta, sintassi articolata e varia. Nessun errore significativo.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Forma pienamente corretta, sintassi articolata e varia. Nessun errore significativo.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3" value="7" data-descriptor="Forma corretta, sintassi appropriata. Errori minimi e non gravi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Forma corretta, sintassi appropriata. Errori minimi e non gravi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3" value="6" data-descriptor="Forma generalmente corretta, qualche imprecisione morfosintattica non grave.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Forma generalmente corretta, qualche imprecisione morfosintattica non grave.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3" value="5" data-descriptor="Forma sostanzialmente corretta, alcuni errori morfosintattici che non compromettono la comprensione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Forma sostanzialmente corretta, alcuni errori morfosintattici che non compromettono la comprensione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3" value="4" data-descriptor="Forma con diversi errori morfosintattici, sintassi elementare e ripetitiva.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Forma con diversi errori morfosintattici, sintassi elementare e ripetitiva.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3" value="3" data-descriptor="Forma con numerosi e gravi errori morfosintattici che ostacolano la comprensione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Forma con numerosi e gravi errori morfosintattici che ostacolano la comprensione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3" value="2" data-descriptor="Forma gravemente scorretta, errori diffusi che compromettono gravemente la comprensione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Forma gravemente scorretta, errori diffusi che compromettono gravemente la comprensione.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 4: Lessico e Registro Linguistico -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">4.</span> Lessico e Registro Linguistico
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la ricchezza lessicale, la proprietà di linguaggio e l'adeguatezza del registro
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion4" value="8" data-descriptor="Lessico ricco, appropriato e vario. Registro pienamente adeguato al contesto.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Lessico ricco, appropriato e vario. Registro pienamente adeguato al contesto.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4" value="7" data-descriptor="Lessico appropriato e abbastanza vario. Registro adeguato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Lessico appropriato e abbastanza vario. Registro adeguato.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4" value="6" data-descriptor="Lessico generalmente appropriato, qualche ripetizione. Registro sostanzialmente adeguato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Lessico generalmente appropriato, qualche ripetizione. Registro sostanzialmente adeguato.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4" value="5" data-descriptor="Lessico semplice ma accettabile, alcune ripetizioni. Registro globalmente accettabile.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Lessico semplice ma accettabile, alcune ripetizioni. Registro globalmente accettabile.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4" value="4" data-descriptor="Lessico limitato e ripetitivo, improprietà lessicali. Registro poco adeguato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Lessico limitato e ripetitivo, improprietà lessicali. Registro poco adeguato.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4" value="3" data-descriptor="Lessico povero e inappropriato. Registro inadeguato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Lessico povero e inappropriato. Registro inadeguato.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4" value="2" data-descriptor="Lessico molto povero e gravemente inappropriato. Registro del tutto inadeguato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Lessico molto povero e gravemente inappropriato. Registro del tutto inadeguato.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 5: Capacità Critica e Riflessiva -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">5.</span> Capacità Critica e Riflessiva
+                    <span class="criterion-weight">(Max 15 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di elaborazione personale, riflessione critica e rielaborazione autonoma (competenza chiave per il Liceo delle Scienze Umane)
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion5" value="8" data-descriptor="Riflessione critica eccellente, rielaborazione personale originale e matura.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">14-15</span>
+                            </div>
+                            <p class="level-description">Riflessione critica eccellente, rielaborazione personale originale e matura.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5" value="7" data-descriptor="Buona capacità di riflessione, rielaborazione personale adeguata.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Buona capacità di riflessione, rielaborazione personale adeguata.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5" value="6" data-descriptor="Discreta capacità riflessiva, alcuni spunti personali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">10-11</span>
+                            </div>
+                            <p class="level-description">Discreta capacità riflessiva, alcuni spunti personali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5" value="5" data-descriptor="Capacità riflessiva basilare, limitata rielaborazione personale.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">9</span>
+                            </div>
+                            <p class="level-description">Capacità riflessiva basilare, limitata rielaborazione personale.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5" value="4" data-descriptor="Scarsa capacità riflessiva, rielaborazione personale quasi assente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">7-8</span>
+                            </div>
+                            <p class="level-description">Scarsa capacità riflessiva, rielaborazione personale quasi assente.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5" value="3" data-descriptor="Mancanza di riflessione critica, nessuna rielaborazione personale.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">5-6</span>
+                            </div>
+                            <p class="level-description">Mancanza di riflessione critica, nessuna rielaborazione personale.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5" value="2" data-descriptor="Assenza totale di capacità critica e riflessiva.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">2-4</span>
+                            </div>
+                            <p class="level-description">Assenza totale di capacità critica e riflessiva.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- FINE GRIGLIA TEMA -->
+
+        <!-- GRIGLIA RIASSUNTO -->
+        <div class="evaluation-grid grid-riassunto" id="grid-riassunto" style="display: none;">
+            <!-- Criterio 1: Comprensione e Selezione Informazioni -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">1.</span> Comprensione e Selezione Informazioni Chiave
+                    <span class="criterion-weight">(Max 30 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di individuare informazioni essenziali, concetti principali e gerarchizzazione contenuti
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_rias" value="8" data-descriptor="Comprensione completa e accurata. Selezione ottimale delle informazioni essenziali con perfetta gerarchizzazione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">28-30</span>
+                            </div>
+                            <p class="level-description">Comprensione completa e accurata. Selezione ottimale delle informazioni essenziali con perfetta gerarchizzazione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_rias" value="7" data-descriptor="Buona comprensione del testo. Selezione adeguata delle informazioni principali e secondarie.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">24-27</span>
+                            </div>
+                            <p class="level-description">Buona comprensione del testo. Selezione adeguata delle informazioni principali e secondarie.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_rias" value="6" data-descriptor="Discreta comprensione. Selezione delle informazioni essenziali con qualche imprecisione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">20-23</span>
+                            </div>
+                            <p class="level-description">Discreta comprensione. Selezione delle informazioni essenziali con qualche imprecisione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_rias" value="5" data-descriptor="Comprensione sufficiente. Selezione basilare delle informazioni principali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">18-19</span>
+                            </div>
+                            <p class="level-description">Comprensione sufficiente. Selezione basilare delle informazioni principali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_rias" value="4" data-descriptor="Comprensione parziale. Selezione incompleta, alcune informazioni importanti mancanti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">15-17</span>
+                            </div>
+                            <p class="level-description">Comprensione parziale. Selezione incompleta, alcune informazioni importanti mancanti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_rias" value="3" data-descriptor="Scarsa comprensione. Selezione inadeguata con molte lacune.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">10-14</span>
+                            </div>
+                            <p class="level-description">Scarsa comprensione. Selezione inadeguata con molte lacune.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_rias" value="2" data-descriptor="Mancata comprensione del testo. Informazioni essenziali non individuate.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">5-9</span>
+                            </div>
+                            <p class="level-description">Mancata comprensione del testo. Informazioni essenziali non individuate.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 2: Sintesi e Riduzione -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">2.</span> Capacità di Sintesi e Riduzione
+                    <span class="criterion-weight">(Max 25 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di condensare il testo rispettando il rapporto di riduzione e mantenendo completezza
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_rias" value="8" data-descriptor="Sintesi eccellente, rapporto perfetto. Condensazione efficace mantenendo tutti gli elementi essenziali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">23-25</span>
+                            </div>
+                            <p class="level-description">Sintesi eccellente, rapporto perfetto. Condensazione efficace mantenendo tutti gli elementi essenziali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_rias" value="7" data-descriptor="Buona sintesi, rapporto adeguato. Condensazione efficace con minime omissioni.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">20-22</span>
+                            </div>
+                            <p class="level-description">Buona sintesi, rapporto adeguato. Condensazione efficace con minime omissioni.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_rias" value="6" data-descriptor="Discreta sintesi. Rapporto generalmente rispettato con alcune ridondanze.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">17-19</span>
+                            </div>
+                            <p class="level-description">Discreta sintesi. Rapporto generalmente rispettato con alcune ridondanze.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_rias" value="5" data-descriptor="Sintesi sufficiente. Rapporto accettabile ma con elementi superflui o mancanti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Sintesi sufficiente. Rapporto accettabile ma con elementi superflui o mancanti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_rias" value="4" data-descriptor="Sintesi mediocre. Testo troppo lungo o troppo breve, condensazione inadeguata.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Sintesi mediocre. Testo troppo lungo o troppo breve, condensazione inadeguata.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_rias" value="3" data-descriptor="Scarsa capacità di sintesi. Rapporto non rispettato, molte informazioni superflue.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">8-11</span>
+                            </div>
+                            <p class="level-description">Scarsa capacità di sintesi. Rapporto non rispettato, molte informazioni superflue.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_rias" value="2" data-descriptor="Mancanza di capacità di sintesi. Testo non ridotto o eccessivamente ridotto.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">4-7</span>
+                            </div>
+                            <p class="level-description">Mancanza di capacità di sintesi. Testo non ridotto o eccessivamente ridotto.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 3: Coerenza e Coesione -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">3.</span> Coerenza e Coesione Testuale
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la fluidità del testo, i collegamenti logici e la struttura organizzata del riassunto
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_rias" value="8" data-descriptor="Riassunto perfettamente coerente e coeso. Collegamenti logici eccellenti tra tutte le parti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Riassunto perfettamente coerente e coeso. Collegamenti logici eccellenti tra tutte le parti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_rias" value="7" data-descriptor="Buona coerenza e coesione. Collegamenti chiari e fluidi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona coerenza e coesione. Collegamenti chiari e fluidi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_rias" value="6" data-descriptor="Discreta coerenza. Qualche salto logico ma testo generalmente scorrevole.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Discreta coerenza. Qualche salto logico ma testo generalmente scorrevole.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_rias" value="5" data-descriptor="Coerenza sufficiente. Collegamenti basilari tra le parti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Coerenza sufficiente. Collegamenti basilari tra le parti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_rias" value="4" data-descriptor="Coerenza mediocre. Diversi salti logici, scarsi collegamenti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Coerenza mediocre. Diversi salti logici, scarsi collegamenti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_rias" value="3" data-descriptor="Scarsa coerenza. Testo frammentato con collegamenti inadeguati.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Scarsa coerenza. Testo frammentato con collegamenti inadeguati.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_rias" value="2" data-descriptor="Mancanza di coerenza. Testo disorganico e confuso.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancanza di coerenza. Testo disorganico e confuso.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 4: Correttezza Linguistica -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">4.</span> Correttezza Morfosintattica e Lessicale
+                    <span class="criterion-weight">(Max 15 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la correttezza grammaticale, sintattica e la proprietà lessicale del riassunto
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_rias" value="8" data-descriptor="Forma pienamente corretta. Lessico appropriato e vario. Nessun errore significativo.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">14-15</span>
+                            </div>
+                            <p class="level-description">Forma pienamente corretta. Lessico appropriato e vario. Nessun errore significativo.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_rias" value="7" data-descriptor="Forma corretta. Lessico adeguato con errori minimi e non gravi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Forma corretta. Lessico adeguato con errori minimi e non gravi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_rias" value="6" data-descriptor="Forma generalmente corretta. Qualche imprecisione morfosintattica e lessicale.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">10-11</span>
+                            </div>
+                            <p class="level-description">Forma generalmente corretta. Qualche imprecisione morfosintattica e lessicale.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_rias" value="5" data-descriptor="Forma sostanzialmente corretta. Alcuni errori che non compromettono la comprensione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">9</span>
+                            </div>
+                            <p class="level-description">Forma sostanzialmente corretta. Alcuni errori che non compromettono la comprensione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_rias" value="4" data-descriptor="Forma con diversi errori. Lessico ripetitivo e improprio.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">7-8</span>
+                            </div>
+                            <p class="level-description">Forma con diversi errori. Lessico ripetitivo e improprio.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_rias" value="3" data-descriptor="Forma con numerosi errori gravi. Lessico inadeguato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">5-6</span>
+                            </div>
+                            <p class="level-description">Forma con numerosi errori gravi. Lessico inadeguato.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_rias" value="2" data-descriptor="Forma gravemente scorretta. Errori diffusi che compromettono la comprensione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">2-4</span>
+                            </div>
+                            <p class="level-description">Forma gravemente scorretta. Errori diffusi che compromettono la comprensione.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 5: Oggettività e Riformulazione -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">5.</span> Oggettività e Riformulazione Personale
+                    <span class="criterion-weight">(Max 10 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di esporre oggettivamente senza giudizi personali e di riformulare con parole proprie
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_rias" value="8" data-descriptor="Oggettività perfetta. Riformulazione personale eccellente senza copiature.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">10</span>
+                            </div>
+                            <p class="level-description">Oggettività perfetta. Riformulazione personale eccellente senza copiature.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_rias" value="7" data-descriptor="Buona oggettività. Riformulazione efficace con minime riprese testuali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">8-9</span>
+                            </div>
+                            <p class="level-description">Buona oggettività. Riformulazione efficace con minime riprese testuali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_rias" value="6" data-descriptor="Discreta oggettività. Riformulazione parziale con alcune espressioni del testo originale.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">7</span>
+                            </div>
+                            <p class="level-description">Discreta oggettività. Riformulazione parziale con alcune espressioni del testo originale.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_rias" value="5" data-descriptor="Sufficiente oggettività. Riformulazione limitata, diverse riprese testuali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">6</span>
+                            </div>
+                            <p class="level-description">Sufficiente oggettività. Riformulazione limitata, diverse riprese testuali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_rias" value="4" data-descriptor="Oggettività parziale. Scarsa riformulazione, molte copiature dal testo.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">5</span>
+                            </div>
+                            <p class="level-description">Oggettività parziale. Scarsa riformulazione, molte copiature dal testo.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_rias" value="3" data-descriptor="Mancanza di oggettività. Presenza di giudizi personali, copiatura estesa.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">3-4</span>
+                            </div>
+                            <p class="level-description">Mancanza di oggettività. Presenza di giudizi personali, copiatura estesa.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_rias" value="2" data-descriptor="Totale mancanza di oggettività e riformulazione. Copiatura integrale o pesantemente interpolata.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">1-2</span>
+                            </div>
+                            <p class="level-description">Totale mancanza di oggettività e riformulazione. Copiatura integrale o pesantemente interpolata.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- FINE GRIGLIA RIASSUNTO -->
+
+        <!-- GRIGLIA GRAMMATICA -->
+        <div class="evaluation-grid grid-grammatica" id="grid-grammatica" style="display: none;">
+            <!-- Criterio 1: Verbi Transitivi e Intransitivi -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">1.</span> Riconoscimento Verbi Transitivi e Intransitivi
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di distinguere verbi transitivi (che reggono complemento oggetto) e intransitivi, applicare correttamente la pronominalizzazione e riconoscere usi figurati
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_gram" value="8" data-descriptor="Riconoscimento perfetto di tutti i verbi. Distinzione sicura anche in contesti complessi e usi figurati. Applicazione corretta della pronominalizzazione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Riconoscimento perfetto di tutti i verbi. Distinzione sicura anche in contesti complessi e usi figurati. Applicazione corretta della pronominalizzazione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_gram" value="7" data-descriptor="Riconoscimento corretto nella maggior parte dei casi. Qualche incertezza in contesti complessi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Riconoscimento corretto nella maggior parte dei casi. Qualche incertezza in contesti complessi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_gram" value="6" data-descriptor="Riconoscimento discreto. Distinzione corretta nei casi standard, errori in contesti particolari.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">14-16</span>
+                            </div>
+                            <p class="level-description">Riconoscimento discreto. Distinzione corretta nei casi standard, errori in contesti particolari.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_gram" value="5" data-descriptor="Riconoscimento sufficiente. Distinzione corretta solo nei casi più semplici e frequenti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Riconoscimento sufficiente. Distinzione corretta solo nei casi più semplici e frequenti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_gram" value="4" data-descriptor="Riconoscimento parziale. Numerosi errori anche in casi standard.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Riconoscimento parziale. Numerosi errori anche in casi standard.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_gram" value="3" data-descriptor="Riconoscimento scarso. Confusione frequente tra le due categorie.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Riconoscimento scarso. Confusione frequente tra le due categorie.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_gram" value="2" data-descriptor="Mancato riconoscimento. Incapacità di distinguere verbi transitivi e intransitivi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancato riconoscimento. Incapacità di distinguere verbi transitivi e intransitivi.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 2: Riconoscimento Soggetto -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">2.</span> Riconoscimento e Analisi del Soggetto
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di individuare il soggetto in diverse configurazioni sintattiche (esplicito, sottinteso, posposto, complesso) e di riconoscere proposizioni impersonali
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_gram" value="8" data-descriptor="Individuazione perfetta del soggetto in tutte le configurazioni. Riconoscimento sicuro di soggetto sottinteso, posposto e partitivo. Corretta analisi delle proposizioni impersonali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Individuazione perfetta del soggetto in tutte le configurazioni. Riconoscimento sicuro di soggetto sottinteso, posposto e partitivo. Corretta analisi delle proposizioni impersonali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_gram" value="7" data-descriptor="Buona individuazione del soggetto. Qualche incertezza in frasi complesse o con soggetto sottinteso.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona individuazione del soggetto. Qualche incertezza in frasi complesse o con soggetto sottinteso.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_gram" value="6" data-descriptor="Discreta individuazione. Corretta in frasi semplici, errori in strutture complesse.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">14-16</span>
+                            </div>
+                            <p class="level-description">Discreta individuazione. Corretta in frasi semplici, errori in strutture complesse.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_gram" value="5" data-descriptor="Individuazione sufficiente solo in frasi canoniche (SVO). Difficoltà con ordine marcato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Individuazione sufficiente solo in frasi canoniche (SVO). Difficoltà con ordine marcato.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_gram" value="4" data-descriptor="Individuazione parziale. Errori frequenti anche in frasi semplici.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Individuazione parziale. Errori frequenti anche in frasi semplici.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_gram" value="3" data-descriptor="Scarsa capacità di individuazione. Confusione con altri costituenti della frase.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Scarsa capacità di individuazione. Confusione con altri costituenti della frase.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_gram" value="2" data-descriptor="Mancata individuazione del soggetto. Assenza di consapevolezza sintattica.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancata individuazione del soggetto. Assenza di consapevolezza sintattica.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 3: Complemento Oggetto -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">3.</span> Riconoscimento Complemento Oggetto
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di individuare il complemento oggetto diretto, distinguerlo da complementi indiretti, riconoscere oggetto partitivo e applicare la pronominalizzazione
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_gram" value="8" data-descriptor="Individuazione perfetta del complemento oggetto. Distinzione sicura da complementi indiretti. Corretta pronominalizzazione e riconoscimento oggetto partitivo.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Individuazione perfetta del complemento oggetto. Distinzione sicura da complementi indiretti. Corretta pronominalizzazione e riconoscimento oggetto partitivo.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_gram" value="7" data-descriptor="Buona individuazione. Qualche incertezza in contesti complessi o con verbi particolari.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona individuazione. Qualche incertezza in contesti complessi o con verbi particolari.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_gram" value="6" data-descriptor="Discreta individuazione. Corretta con verbi standard, errori con verbi che alternano transitività.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">14-16</span>
+                            </div>
+                            <p class="level-description">Discreta individuazione. Corretta con verbi standard, errori con verbi che alternano transitività.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_gram" value="5" data-descriptor="Individuazione sufficiente solo con verbi transitivi prototipici.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Individuazione sufficiente solo con verbi transitivi prototipici.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_gram" value="4" data-descriptor="Individuazione parziale. Confusione frequente con complementi indiretti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Individuazione parziale. Confusione frequente con complementi indiretti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_gram" value="3" data-descriptor="Scarsa individuazione. Incapacità di applicare test di pronominalizzazione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Scarsa individuazione. Incapacità di applicare test di pronominalizzazione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_gram" value="2" data-descriptor="Mancata individuazione. Assenza di distinzione tra complementi diretti e indiretti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancata individuazione. Assenza di distinzione tra complementi diretti e indiretti.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 4: Complementi Indiretti -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">4.</span> Riconoscimento Complementi Indiretti
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di individuare e classificare i principali complementi indiretti (termine, specificazione, tempo, luogo, mezzo, causa, fine, modo, compagnia, agente)
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_gram" value="8" data-descriptor="Individuazione e classificazione perfetta di tutti i complementi indiretti. Distinzione sicura anche in casi ambigui. Corretta analisi delle sfumature semantiche.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Individuazione e classificazione perfetta di tutti i complementi indiretti. Distinzione sicura anche in casi ambigui. Corretta analisi delle sfumature semantiche.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_gram" value="7" data-descriptor="Buona individuazione e classificazione. Qualche imprecisione in complementi meno frequenti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona individuazione e classificazione. Qualche imprecisione in complementi meno frequenti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_gram" value="6" data-descriptor="Discreta individuazione. Corretta classificazione dei complementi principali, errori in quelli secondari.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">14-16</span>
+                            </div>
+                            <p class="level-description">Discreta individuazione. Corretta classificazione dei complementi principali, errori in quelli secondari.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_gram" value="5" data-descriptor="Individuazione sufficiente. Classificazione corretta solo dei complementi più comuni (termine, specificazione, luogo, tempo).">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Individuazione sufficiente. Classificazione corretta solo dei complementi più comuni (termine, specificazione, luogo, tempo).</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_gram" value="4" data-descriptor="Individuazione parziale. Numerose confusioni nella classificazione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Individuazione parziale. Numerose confusioni nella classificazione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_gram" value="3" data-descriptor="Scarsa individuazione. Classificazione errata anche dei complementi principali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Scarsa individuazione. Classificazione errata anche dei complementi principali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_gram" value="2" data-descriptor="Mancata individuazione. Assenza di capacità di classificazione dei complementi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancata individuazione. Assenza di capacità di classificazione dei complementi.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 5: Preposizioni -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">5.</span> Conoscenza e Uso delle Preposizioni
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di riconoscere preposizioni proprie e improprie, distinguere significati polisemici, individuare locuzioni preposizionali e applicare correttamente preposizioni articolate
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_gram" value="8" data-descriptor="Conoscenza perfetta di tutte le preposizioni. Distinzione sicura tra proprie e improprie. Corretta interpretazione di significati polisemici e uso appropriato delle preposizioni articolate.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Conoscenza perfetta di tutte le preposizioni. Distinzione sicura tra proprie e improprie. Corretta interpretazione di significati polisemici e uso appropriato delle preposizioni articolate.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_gram" value="7" data-descriptor="Buona conoscenza delle preposizioni. Qualche incertezza nelle locuzioni preposizionali complesse.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona conoscenza delle preposizioni. Qualche incertezza nelle locuzioni preposizionali complesse.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_gram" value="6" data-descriptor="Discreta conoscenza. Corretta identificazione delle preposizioni semplici, errori in quelle improprie e locuzioni.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">14-16</span>
+                            </div>
+                            <p class="level-description">Discreta conoscenza. Corretta identificazione delle preposizioni semplici, errori in quelle improprie e locuzioni.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_gram" value="5" data-descriptor="Conoscenza sufficiente delle preposizioni principali. Difficoltà con significati non prototipici.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Conoscenza sufficiente delle preposizioni principali. Difficoltà con significati non prototipici.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_gram" value="4" data-descriptor="Conoscenza parziale. Errori frequenti nell'uso e nel riconoscimento.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Conoscenza parziale. Errori frequenti nell'uso e nel riconoscimento.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_gram" value="3" data-descriptor="Scarsa conoscenza. Confusione tra diverse preposizioni e loro funzioni.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Scarsa conoscenza. Confusione tra diverse preposizioni e loro funzioni.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_gram" value="2" data-descriptor="Mancata conoscenza delle preposizioni. Incapacità di riconoscerle e usarle correttamente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancata conoscenza delle preposizioni. Incapacità di riconoscerle e usarle correttamente.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- FINE GRIGLIA GRAMMATICA -->
+
+        <!-- GRIGLIA LATINO -->
+        <div class="evaluation-grid grid-latino" id="grid-latino" style="display: none;">
+            <!-- Criterio 1: Analisi e Traduzione Verbi -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">1.</span> Analisi e Traduzione dei Verbi
+                    <span class="criterion-weight">(Max 25 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di analizzare morfologicamente i verbi (modo, tempo, persona, numero, diatesi) e tradurli correttamente in italiano
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_lat" value="8" data-descriptor="Analisi perfetta di tutti i verbi. Riconoscimento sicuro di modo, tempo, persona, numero, diatesi e coniugazione. Traduzione sempre corretta con scelta lessicale appropriata.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">23-25</span>
+                            </div>
+                            <p class="level-description">Analisi perfetta di tutti i verbi. Riconoscimento sicuro di modo, tempo, persona, numero, diatesi e coniugazione. Traduzione sempre corretta con scelta lessicale appropriata.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_lat" value="7" data-descriptor="Analisi corretta nella maggior parte dei casi. Qualche imprecisione in forme verbali complesse. Traduzione generalmente accurata.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">20-22</span>
+                            </div>
+                            <p class="level-description">Analisi corretta nella maggior parte dei casi. Qualche imprecisione in forme verbali complesse. Traduzione generalmente accurata.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_lat" value="6" data-descriptor="Analisi discreta. Corretta riconoscimento forme standard, errori in forme particolari. Traduzione con qualche inesattezza.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">17-19</span>
+                            </div>
+                            <p class="level-description">Analisi discreta. Corretta riconoscimento forme standard, errori in forme particolari. Traduzione con qualche inesattezza.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_lat" value="5" data-descriptor="Analisi sufficiente delle forme verbali più frequenti. Traduzione essenziale ma comprensibile.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Analisi sufficiente delle forme verbali più frequenti. Traduzione essenziale ma comprensibile.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_lat" value="4" data-descriptor="Analisi parziale. Numerosi errori anche in forme comuni. Traduzione spesso imprecisa.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Analisi parziale. Numerosi errori anche in forme comuni. Traduzione spesso imprecisa.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_lat" value="3" data-descriptor="Analisi scarsa. Frequente confusione tra modi e tempi. Traduzione inadeguata.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">8-11</span>
+                            </div>
+                            <p class="level-description">Analisi scarsa. Frequente confusione tra modi e tempi. Traduzione inadeguata.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_lat" value="2" data-descriptor="Mancata analisi morfologica. Incapacità di riconoscere forme verbali. Traduzione errata o assente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">4-7</span>
+                            </div>
+                            <p class="level-description">Mancata analisi morfologica. Incapacità di riconoscere forme verbali. Traduzione errata o assente.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 2: Analisi e Traduzione I Declinazione -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">2.</span> Analisi e Traduzione Nomi I Declinazione
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di analizzare morfologicamente i nomi della prima declinazione (caso, numero, genere) e tradurli con funzione sintattica appropriata
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_lat" value="8" data-descriptor="Analisi perfetta di tutti i nomi. Riconoscimento sicuro di caso, numero e genere. Traduzione corretta con funzione sintattica appropriata (soggetto, compl. oggetto, termine, ecc.).">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Analisi perfetta di tutti i nomi. Riconoscimento sicuro di caso, numero e genere. Traduzione corretta con funzione sintattica appropriata (soggetto, compl. oggetto, termine, ecc.).</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_lat" value="7" data-descriptor="Buona analisi. Qualche incertezza in forme omofone. Traduzione generalmente corretta.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona analisi. Qualche incertezza in forme omofone. Traduzione generalmente corretta.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_lat" value="6" data-descriptor="Discreta analisi. Corretta identificazione casi principali, errori in casi obliqui. Traduzione con qualche imprecisione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">14-16</span>
+                            </div>
+                            <p class="level-description">Discreta analisi. Corretta identificazione casi principali, errori in casi obliqui. Traduzione con qualche imprecisione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_lat" value="5" data-descriptor="Analisi sufficiente. Riconoscimento basilare di nominativo e accusativo. Traduzione essenziale.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Analisi sufficiente. Riconoscimento basilare di nominativo e accusativo. Traduzione essenziale.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_lat" value="4" data-descriptor="Analisi parziale. Confusione frequente tra casi. Traduzione spesso errata.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Analisi parziale. Confusione frequente tra casi. Traduzione spesso errata.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_lat" value="3" data-descriptor="Analisi scarsa. Mancato riconoscimento dei casi. Traduzione inadeguata.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Analisi scarsa. Mancato riconoscimento dei casi. Traduzione inadeguata.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_lat" value="2" data-descriptor="Mancata analisi morfologica. Incapacità di declinare i nomi. Traduzione errata o assente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancata analisi morfologica. Incapacità di declinare i nomi. Traduzione errata o assente.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 3: Traduzione Latino → Italiano -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">3.</span> Traduzione Frasi da Latino a Italiano
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di tradurre frasi complete dal latino all'italiano mantenendo senso, sintassi e riconoscendo apposizioni e attributi
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_lat" value="8" data-descriptor="Traduzione perfetta. Resa fluida e idiomatica in italiano. Corretta interpretazione di apposizioni, attributi e costrutti sintattici. Scelte lessicali appropriate.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Traduzione perfetta. Resa fluida e idiomatica in italiano. Corretta interpretazione di apposizioni, attributi e costrutti sintattici. Scelte lessicali appropriate.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_lat" value="7" data-descriptor="Traduzione corretta e scorrevole. Qualche imprecisione lessicale ma senso preservato. Buona resa di apposizioni e attributi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Traduzione corretta e scorrevole. Qualche imprecisione lessicale ma senso preservato. Buona resa di apposizioni e attributi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_lat" value="6" data-descriptor="Traduzione discreta. Senso generale compreso, alcune inesattezze sintattiche. Parziale riconoscimento di apposizioni e attributi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">14-16</span>
+                            </div>
+                            <p class="level-description">Traduzione discreta. Senso generale compreso, alcune inesattezze sintattiche. Parziale riconoscimento di apposizioni e attributi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_lat" value="5" data-descriptor="Traduzione sufficiente. Senso basilare reso, diverse imprecisioni. Difficoltà con apposizioni e attributi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Traduzione sufficiente. Senso basilare reso, diverse imprecisioni. Difficoltà con apposizioni e attributi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_lat" value="4" data-descriptor="Traduzione mediocre. Senso parzialmente frainteso. Numerosi errori sintattici.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Traduzione mediocre. Senso parzialmente frainteso. Numerosi errori sintattici.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_lat" value="3" data-descriptor="Traduzione scarsa. Senso frainteso. Mancato riconoscimento strutture sintattiche.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Traduzione scarsa. Senso frainteso. Mancato riconoscimento strutture sintattiche.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_lat" value="2" data-descriptor="Mancata traduzione. Incapacità di comprendere il testo latino. Traduzione completamente errata o assente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancata traduzione. Incapacità di comprendere il testo latino. Traduzione completamente errata o assente.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 4: Traduzione Italiano → Latino -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">4.</span> Traduzione Frasi da Italiano a Latino
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di rendere in latino frasi italiane usando correttamente casi, desinenze verbali, apposizioni e attributi con concordanza appropriata
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_lat" value="8" data-descriptor="Traduzione perfetta in latino. Uso corretto di tutti i casi, desinenze verbali e concordanze. Resa appropriata di apposizioni e attributi. Ordine delle parole naturale.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Traduzione perfetta in latino. Uso corretto di tutti i casi, desinenze verbali e concordanze. Resa appropriata di apposizioni e attributi. Ordine delle parole naturale.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_lat" value="7" data-descriptor="Buona traduzione. Uso generalmente corretto di casi e desinenze. Qualche imprecisione minore. Buona resa di apposizioni e attributi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona traduzione. Uso generalmente corretto di casi e desinenze. Qualche imprecisione minore. Buona resa di apposizioni e attributi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_lat" value="6" data-descriptor="Traduzione discreta. Corretta nelle strutture semplici, errori in quelle complesse. Parziale resa di apposizioni e attributi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">14-16</span>
+                            </div>
+                            <p class="level-description">Traduzione discreta. Corretta nelle strutture semplici, errori in quelle complesse. Parziale resa di apposizioni e attributi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_lat" value="5" data-descriptor="Traduzione sufficiente. Struttura basilare comprensibile, diversi errori morfologici. Difficoltà con apposizioni e attributi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Traduzione sufficiente. Struttura basilare comprensibile, diversi errori morfologici. Difficoltà con apposizioni e attributi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_lat" value="4" data-descriptor="Traduzione mediocre. Numerosi errori morfologici e sintattici. Scarsa padronanza delle concordanze.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Traduzione mediocre. Numerosi errori morfologici e sintattici. Scarsa padronanza delle concordanze.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_lat" value="3" data-descriptor="Traduzione scarsa. Gravi errori morfologici. Mancata applicazione regole declinazione e coniugazione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Traduzione scarsa. Gravi errori morfologici. Mancata applicazione regole declinazione e coniugazione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_lat" value="2" data-descriptor="Mancata traduzione. Incapacità di costruire frasi in latino. Assenza di conoscenze morfologiche di base.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancata traduzione. Incapacità di costruire frasi in latino. Assenza di conoscenze morfologiche di base.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 5: Riconoscimento Apposizioni e Attributi -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">5.</span> Riconoscimento e Traduzione di Apposizioni e Attributi
+                    <span class="criterion-weight">(Max 15 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di riconoscere e analizzare apposizioni e attributi, applicare correttamente le concordanze (genere, numero, caso) e renderli appropriatamente in traduzione
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_lat" value="8" data-descriptor="Riconoscimento perfetto di apposizioni e attributi. Analisi corretta con concordanze (genere, numero, caso). Traduzione sempre appropriata distinguendo funzione attributiva e appositiva.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">14-15</span>
+                            </div>
+                            <p class="level-description">Riconoscimento perfetto di apposizioni e attributi. Analisi corretta con concordanze (genere, numero, caso). Traduzione sempre appropriata distinguendo funzione attributiva e appositiva.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_lat" value="7" data-descriptor="Buon riconoscimento. Analisi corretta nella maggior parte dei casi. Qualche imprecisione nelle concordanze complesse.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Buon riconoscimento. Analisi corretta nella maggior parte dei casi. Qualche imprecisione nelle concordanze complesse.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_lat" value="6" data-descriptor="Discreto riconoscimento. Corretta identificazione casi standard, errori in costrutti complessi. Traduzione generalmente comprensibile.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">10-11</span>
+                            </div>
+                            <p class="level-description">Discreto riconoscimento. Corretta identificazione casi standard, errori in costrutti complessi. Traduzione generalmente comprensibile.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_lat" value="5" data-descriptor="Riconoscimento sufficiente. Identificazione basilare, difficoltà con concordanze. Traduzione essenziale.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">9</span>
+                            </div>
+                            <p class="level-description">Riconoscimento sufficiente. Identificazione basilare, difficoltà con concordanze. Traduzione essenziale.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_lat" value="4" data-descriptor="Riconoscimento parziale. Confusione tra apposizioni e attributi. Errori frequenti nelle concordanze.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">7-8</span>
+                            </div>
+                            <p class="level-description">Riconoscimento parziale. Confusione tra apposizioni e attributi. Errori frequenti nelle concordanze.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_lat" value="3" data-descriptor="Scarso riconoscimento. Mancata distinzione tra funzioni sintattiche. Concordanze errate.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">5-6</span>
+                            </div>
+                            <p class="level-description">Scarso riconoscimento. Mancata distinzione tra funzioni sintattiche. Concordanze errate.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_lat" value="2" data-descriptor="Mancato riconoscimento. Assenza di conoscenza delle concordanze. Traduzione errata o assente.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">2-4</span>
+                            </div>
+                            <p class="level-description">Mancato riconoscimento. Assenza di conoscenza delle concordanze. Traduzione errata o assente.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- FINE GRIGLIA LATINO -->
+
+        <!-- Sezione Note e Commenti -->
+        <div class="notes-section">
+            <h3>📋 Note e Commenti del Docente</h3>
+            <textarea id="teacherNotes" placeholder="Inserisci commenti qualitativi, osservazioni specifiche, punti di forza e aree di miglioramento..."></textarea>
+        </div>
+
+        <!-- Risultato Finale -->
+        <div class="result-section">
+            <div class="score-display">
+                <div class="score-item">
+                    <span class="score-label">Punteggio Totale:</span>
+                    <span class="score-value" id="totalScore">0</span>
+                    <span class="score-max">/ 100</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">Voto in Decimi:</span>
+                    <span class="score-value final-grade" id="finalGrade">-</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">Giudizio:</span>
+                    <span class="score-value judgment" id="judgment">-</span>
+                </div>
+            </div>
+
+            <div class="breakdown" id="breakdown"></div>
+        </div>
+
+        <!-- Azioni -->
+        <div class="actions">
+            <button class="btn btn-primary" onclick="printEvaluation()">🖨️ Stampa Griglia</button>
+            <button class="btn btn-secondary" onclick="exportToPDF()">📄 Esporta PDF</button>
+            <button class="btn btn-excel" onclick="addToExcelRegister()">📊 Aggiungi a Registro Excel</button>
+            <button class="btn btn-excel-export" onclick="downloadExcelRegister()">📥 Scarica Registro Completo Excel</button>
+            <button class="btn btn-tertiary" onclick="resetForm()">🔄 Nuova Valutazione</button>
+        </div>
+
+        <!-- Sezione Registro Valutazioni -->
+        <div class="register-section" id="registerSection">
+            <div class="register-header">
+                <h3>📚 Registro Valutazioni della Classe</h3>
+                <div class="register-stats" id="registerStats"></div>
+            </div>
+            <div class="register-actions">
+                <button class="btn btn-small" onclick="toggleRegisterView()">👁️ Mostra/Nascondi Registro</button>
+                <button class="btn btn-small btn-danger" onclick="clearRegister()">🗑️ Svuota Registro</button>
+            </div>
+            <div class="register-table-container" id="registerTableContainer" style="display: none;">
+                <table class="register-table" id="registerTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome e Cognome</th>
+                            <th>Classe</th>
+                            <th>Data</th>
+                            <th>Traccia</th>
+                            <th>Contenuto</th>
+                            <th>Organizzazione</th>
+                            <th>Morfosintattica</th>
+                            <th>Lessico</th>
+                            <th>Capacità Critica</th>
+                            <th>Totale</th>
+                            <th>Voto</th>
+                            <th>Giudizio</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registerTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>Griglia sviluppata secondo: Tassonomia di Bloom (analisi, sintesi, valutazione) • Rubric AAC&U • Indicazioni Nazionali MIUR</p>
+            <p class="version">v1.0 - Liceo delle Scienze Umane - Biennio</p>
+        </footer>
+    </div>
+
+    <script src="grid-manager.js"></script>
+    <script src="script.js"></script>
+    <script src="script-multi-modifications.js"></script>
+</body>
+</html>
