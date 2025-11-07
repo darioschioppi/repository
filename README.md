@@ -1,9 +1,9 @@
-# Griglia di Valutazione - Tema d'Italiano
+# Sistema Multi-Griglia di Valutazione
 ## Liceo delle Scienze Umane - Biennio
 
 ### Descrizione
 
-Applicazione web professionale per la valutazione dei temi di italiano nel biennio del Liceo delle Scienze Umane, basata sulle migliori metodologie didattiche internazionali e sulle indicazioni nazionali MIUR.
+Applicazione web professionale per la valutazione di prove scritte (Italiano e Latino) nel biennio del Liceo delle Scienze Umane. Il sistema integra **5 griglie di valutazione** complete, basate sulle migliori metodologie didattiche internazionali e sulle indicazioni nazionali MIUR.
 
 ### Metodologie Applicate
 
@@ -173,11 +173,18 @@ Il sistema utilizza una conversione proporzionale:
 
 ```
 griglia-valutazione/
-├── index.html          # Struttura HTML dell'applicazione
-├── styles.css          # Stili e design responsive
-├── script.js           # Logica di calcolo e interazione
-├── README.md           # Documentazione principale
-└── GUIDA_EXCEL.md      # Guida dettagliata funzionalità Excel
+├── index.html                    # Struttura HTML - 5 griglie complete
+├── styles.css                    # Stili e design responsive
+├── script.js                     # Logica di calcolo base
+├── script-multi-modifications.js # Override funzioni multi-griglia
+├── grid-manager.js               # Configurazione 5 griglie
+├── README.md                     # Documentazione principale
+├── DEMO.html                     # Demo funzionalità
+├── GUIDA_EXCEL.md               # Guida registri Excel
+├── GUIDA_RIASSUNTO.md           # Metodologia riassunti
+├── GUIDA_GRAMMATICA.md          # Teoria grammatica italiana
+├── GUIDA_LATINO.md              # Morfosintassi latino base
+└── GUIDA_VERSIONI_LATINO.md     # Traduzione versioni latino
 ```
 
 ### Tecnologie Utilizzate
@@ -230,11 +237,11 @@ Per domande o suggerimenti riguardo all'applicazione, consulta la documentazione
 
 ---
 
-## 🆕 Novità Versione 3.0 - Sistema Multi-Griglia
+## 🆕 Novità Versione 4.0 - Sistema Multi-Griglia Completo
 
-### 🎯 Menu Selezione Griglie
+### 🎯 Menu Selezione Griglie - 5 Griglie Attive!
 
-L'applicazione ora supporta **multiple griglie di valutazione** selezionabili:
+L'applicazione supporta **5 griglie di valutazione professionali** completamente operative:
 
 1. **📝 Tema / Testo Argomentativo** ✅ ATTIVA
    - 5 criteri di valutazione
@@ -246,17 +253,34 @@ L'applicazione ora supporta **multiple griglie di valutazione** selezionabili:
    - Tot 100 punti (30+25+20+15+10)
    - Metodologia: Brown-Day + PISA + PIRLS + CEFR
 
-3. **🔍 Analisi del Testo** 🚧 Coming Soon
+3. **📚 Verifica Grammatica Italiana** ✅ ATTIVA
+   - 5 criteri grammaticali
+   - Tot 100 punti (20+20+20+20+20)
+   - Metodologia: LEND + GISCEL + Tesnière + Chomsky + Halliday
+   - Argomenti: Verbi transitivi/intransitivi, Soggetto, Complemento oggetto, Complementi indiretti, Preposizioni
 
-4. **💭 Commento Critico** 🚧 Coming Soon
+4. **🏛️ Verifica Latino (Verbi + I Decl.)** ✅ ATTIVA
+   - 5 criteri morfosintattici
+   - Tot 100 punti (25+20+20+20+15)
+   - Metodologia: AICC + Cambridge + Ørberg + ACL + JACT
+   - Argomenti: Analisi verbi, Analisi I declinazione, Traduzione bidirezionale, Apposizioni e attributi
+
+5. **📜 Versione di Latino** ✅ ATTIVA
+   - 5 criteri per traduzione brani
+   - Tot 100 punti (20+25+25+20+10)
+   - Metodologia: AICC + JACT + ACL + Translation Studies
+   - Competenze: Morfologia, Sintassi e costrutti, Comprensione testuale, Traduzione, Lessico
 
 ### Gestione Registri Separati
 
 ✨ **Ogni griglia ha il proprio registro Excel separato**
 - Registro Temi salvato indipendentemente
 - Registro Riassunti salvato indipendentemente
+- Registro Grammatica salvato indipendentemente
+- Registro Verifiche Latino salvato indipendentemente
+- Registro Versioni Latino salvato indipendentemente
 - Export Excel personalizzato per tipo di prova
-- Statistiche separate per ogni tipologia
+- Statistiche separate per ogni tipologia di valutazione
 
 ### Griglia Riassunto - Criteri Best of Breed
 
@@ -273,6 +297,45 @@ L'applicazione ora supporta **multiple griglie di valutazione** selezionabili:
 3. **Coerenza e Coesione Testuale** (20 pt)
 4. **Correttezza Morfosintattica e Lessicale** (15 pt)
 5. **Oggettività e Riformulazione Personale** (10 pt)
+
+### Griglia Grammatica Italiana - Criteri Linguistici
+
+**Metodologie Italiane e Internazionali:**
+- 🇮🇹 **LEND** (Lingua e Nuova Didattica) + **GISCEL** (Gruppo Intervento Educazione Linguistica)
+- 🌍 **Tesnière** (Dependency Grammar) + **Chomsky** (Generative Grammar) + **Halliday** (Functional Grammar)
+
+**I 5 Criteri:**
+1. **Verbi Transitivi e Intransitivi** (20 pt)
+2. **Riconoscimento Soggetto** (20 pt)
+3. **Complemento Oggetto** (20 pt)
+4. **Complementi Indiretti** (20 pt)
+5. **Preposizioni** (20 pt)
+
+### Griglia Verifica Latino - Morfosintassi Base
+
+**Metodologie Lingue Classiche:**
+- 🇮🇹 **AICC** (Associazione Italiana Cultura Classica)
+- 🌍 **Cambridge Latin Course** + **Ørberg Method** + **ACL Standards** + **JACT Reading Latin**
+
+**I 5 Criteri:**
+1. **Analisi e Traduzione Verbi** (25 pt)
+2. **Analisi e Traduzione Nomi I Declinazione** (20 pt)
+3. **Traduzione Latino → Italiano** (20 pt)
+4. **Traduzione Italiano → Latino** (20 pt)
+5. **Riconoscimento Apposizioni e Attributi** (15 pt)
+
+### Griglia Versione di Latino - Traduzione Brani
+
+**Metodologie Translation Studies:**
+- 🇮🇹 **AICC** + **CUSL** (Consulta Universitaria Studi Latini)
+- 🌍 **JACT Reading Latin** + **ACL Standards** + **Translation Theory**
+
+**I 5 Criteri:**
+1. **Analisi Morfologica** (20 pt) - Riconoscimento forme verbali e nominali
+2. **Analisi Sintattica e Costrutti** (25 pt) - Participio congiunto, ablativo assoluto, cum narrativo, perifrastiche
+3. **Comprensione del Testo** (25 pt) - Comprensione letterale, inferenziale, critica
+4. **Traduzione in Italiano** (20 pt) - Correttezza, fluidità, naturalezza
+5. **Lessico e Scelte Traduttive** (10 pt) - Proprietà lessicale e appropriatezza contestuale
 
 ## 🆕 Novità Versione 2.0
 
@@ -310,11 +373,19 @@ L'applicazione ora supporta **multiple griglie di valutazione** selezionabili:
 
 ---
 
-**Versione**: 3.0 (Multi-Griglia con Excel)
-**Ultima modifica**: Novembre 2025
+**Versione**: 4.0 (Sistema Multi-Griglia Completo - 5 Griglie)
+**Ultima modifica**: Gennaio 2025
 **Target**: Liceo delle Scienze Umane - Biennio (classi 1ª e 2ª)
 
 **Changelog:**
-- v3.0: Sistema multi-griglia con menu selezione, griglia riassunto, registri separati
+- v4.0: Aggiunta quinta griglia Versione Latino + guide metodologiche complete per tutte le griglie
+- v3.0: Sistema multi-griglia con menu selezione, griglia riassunto, grammatica italiana, verifica latino
 - v2.0: Gestione registro Excel cumulativo con esportazione professionale
 - v1.0: Griglia singola tema con valutazione automatica
+
+**Guide Metodologiche Disponibili:**
+- 📖 GUIDA_EXCEL.md - Gestione registri Excel
+- 📖 GUIDA_RIASSUNTO.md - Metodologia riassunti
+- 📖 GUIDA_GRAMMATICA.md - Teoria grammaticale italiana
+- 📖 GUIDA_LATINO.md - Morfosintassi latino base
+- 📖 GUIDA_VERSIONI_LATINO.md - Traduzione versioni di latino
