@@ -32,8 +32,8 @@
                 <button class="grid-btn" onclick="selectGrid('latino')" id="btn-latino">
                     🏛️ Verifica Latino (Verbi + I Decl.)
                 </button>
-                <button class="grid-btn disabled" onclick="selectGrid('analisi')" id="btn-analisi">
-                    🔍 Analisi del Testo (Coming Soon)
+                <button class="grid-btn" onclick="selectGrid('versione')" id="btn-versione">
+                    📜 Versione di Latino
                 </button>
             </div>
             <div class="current-grid-info" id="currentGridInfo">
@@ -1735,6 +1735,425 @@
             </div>
         </div>
         <!-- FINE GRIGLIA LATINO -->
+
+        <!-- GRIGLIA VERSIONE LATINO -->
+        <div class="evaluation-grid grid-versione" id="grid-versione" style="display: none;">
+            <!-- Criterio 1: Analisi Morfologica -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">1.</span> Analisi Morfologica
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di riconoscere e analizzare correttamente le forme morfologiche (verbi, nomi, pronomi, aggettivi, participi)
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_vers" value="8" data-descriptor="Analisi morfologica perfetta di tutte le forme. Riconoscimento sicuro di coniugazioni, declinazioni, tempi, modi, casi. Identificazione corretta anche di forme irregolari e particolari.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Analisi morfologica perfetta di tutte le forme. Riconoscimento sicuro di coniugazioni, declinazioni, tempi, modi, casi. Identificazione corretta anche di forme irregolari e particolari.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_vers" value="7" data-descriptor="Buona analisi morfologica con identificazione corretta della maggior parte delle forme. Qualche incertezza in forme complesse o irregolari.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona analisi morfologica con identificazione corretta della maggior parte delle forme. Qualche incertezza in forme complesse o irregolari.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_vers" value="6" data-descriptor="Discreta analisi morfologica. Riconoscimento corretto delle forme standard, errori nelle forme meno comuni.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Discreta analisi morfologica. Riconoscimento corretto delle forme standard, errori nelle forme meno comuni.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_vers" value="5" data-descriptor="Analisi morfologica sufficiente. Riconoscimento basilare delle forme più frequenti, difficoltà con forme articolate.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Analisi morfologica sufficiente. Riconoscimento basilare delle forme più frequenti, difficoltà con forme articolate.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_vers" value="4" data-descriptor="Analisi morfologica parziale. Numerosi errori anche in forme comuni, confusione tra categorie grammaticali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Analisi morfologica parziale. Numerosi errori anche in forme comuni, confusione tra categorie grammaticali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_vers" value="3" data-descriptor="Analisi morfologica scarsa. Frequenti errori di identificazione, mancato riconoscimento di forme basilari.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Analisi morfologica scarsa. Frequenti errori di identificazione, mancato riconoscimento di forme basilari.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion1_vers" value="2" data-descriptor="Mancata analisi morfologica. Incapacità di riconoscere anche le forme più elementari, gravi lacune morfologiche.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Mancata analisi morfologica. Incapacità di riconoscere anche le forme più elementari, gravi lacune morfologiche.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 2: Analisi Sintattica e Costrutti -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">2.</span> Analisi Sintattica e Riconoscimento Costrutti
+                    <span class="criterion-weight">(Max 25 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di individuare la struttura sintattica, riconoscere proposizioni principali e subordinate, identificare costrutti particolari
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_vers" value="8" data-descriptor="Analisi sintattica perfetta. Identificazione sicura di tutte le proposizioni, corretta individuazione di costrutti (participio congiunto, ablativo assoluto, cum narrativo, perifrastiche). Riconoscimento della gerarchia sintattica.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">23-25</span>
+                            </div>
+                            <p class="level-description">Analisi sintattica perfetta. Identificazione sicura di tutte le proposizioni, corretta individuazione di costrutti (participio congiunto, ablativo assoluto, cum narrativo, perifrastiche). Riconoscimento della gerarchia sintattica.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_vers" value="7" data-descriptor="Buona analisi sintattica. Corretta individuazione della maggior parte delle proposizioni e dei costrutti principali. Qualche imprecisione in costrutti complessi.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">20-22</span>
+                            </div>
+                            <p class="level-description">Buona analisi sintattica. Corretta individuazione della maggior parte delle proposizioni e dei costrutti principali. Qualche imprecisione in costrutti complessi.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_vers" value="6" data-descriptor="Discreta analisi sintattica. Riconoscimento delle proposizioni principali, qualche difficoltà con subordinate e costrutti particolari.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">17-19</span>
+                            </div>
+                            <p class="level-description">Discreta analisi sintattica. Riconoscimento delle proposizioni principali, qualche difficoltà con subordinate e costrutti particolari.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_vers" value="5" data-descriptor="Analisi sintattica sufficiente. Individuazione basilare della struttura, difficoltà con costrutti e subordinate complesse.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Analisi sintattica sufficiente. Individuazione basilare della struttura, difficoltà con costrutti e subordinate complesse.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_vers" value="4" data-descriptor="Analisi sintattica parziale. Numerosi errori nell'individuazione delle proposizioni, mancato riconoscimento di costrutti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Analisi sintattica parziale. Numerosi errori nell'individuazione delle proposizioni, mancato riconoscimento di costrutti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_vers" value="3" data-descriptor="Analisi sintattica scarsa. Mancata individuazione della struttura del periodo, confusione tra proposizioni.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">8-11</span>
+                            </div>
+                            <p class="level-description">Analisi sintattica scarsa. Mancata individuazione della struttura del periodo, confusione tra proposizioni.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion2_vers" value="2" data-descriptor="Mancata analisi sintattica. Totale incapacità di riconoscere la struttura del periodo e i costrutti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">4-7</span>
+                            </div>
+                            <p class="level-description">Mancata analisi sintattica. Totale incapacità di riconoscere la struttura del periodo e i costrutti.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 3: Comprensione del Testo -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">3.</span> Comprensione del Testo Latino
+                    <span class="criterion-weight">(Max 25 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di comprendere il significato complessivo del brano, cogliere informazioni esplicite e implicite, interpretare il contesto
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_vers" value="8" data-descriptor="Comprensione perfetta e profonda del testo. Coglimento di tutti i significati espliciti e impliciti, corretta interpretazione del contesto storico-culturale. Capacità di analisi critica del contenuto.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">23-25</span>
+                            </div>
+                            <p class="level-description">Comprensione perfetta e profonda del testo. Coglimento di tutti i significati espliciti e impliciti, corretta interpretazione del contesto storico-culturale. Capacità di analisi critica del contenuto.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_vers" value="7" data-descriptor="Buona comprensione del testo. Coglimento delle informazioni principali e di molti significati impliciti. Interpretazione generalmente corretta del contesto.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">20-22</span>
+                            </div>
+                            <p class="level-description">Buona comprensione del testo. Coglimento delle informazioni principali e di molti significati impliciti. Interpretazione generalmente corretta del contesto.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_vers" value="6" data-descriptor="Discreta comprensione del testo. Coglimento delle informazioni esplicite principali, qualche difficoltà con significati impliciti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">17-19</span>
+                            </div>
+                            <p class="level-description">Discreta comprensione del testo. Coglimento delle informazioni esplicite principali, qualche difficoltà con significati impliciti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_vers" value="5" data-descriptor="Comprensione sufficiente del senso generale. Coglimento delle informazioni basilari, difficoltà con sfumature e impliciti.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">15-16</span>
+                            </div>
+                            <p class="level-description">Comprensione sufficiente del senso generale. Coglimento delle informazioni basilari, difficoltà con sfumature e impliciti.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_vers" value="4" data-descriptor="Comprensione parziale e frammentaria. Coglimento solo di alcune informazioni esplicite, senso generale incerto.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">12-14</span>
+                            </div>
+                            <p class="level-description">Comprensione parziale e frammentaria. Coglimento solo di alcune informazioni esplicite, senso generale incerto.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_vers" value="3" data-descriptor="Scarsa comprensione del testo. Fraintendimento del senso generale, numerose lacune interpretative.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">8-11</span>
+                            </div>
+                            <p class="level-description">Scarsa comprensione del testo. Fraintendimento del senso generale, numerose lacune interpretative.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion3_vers" value="2" data-descriptor="Mancata comprensione del testo. Totale fraintendimento del contenuto, incapacità di cogliere il senso del brano.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">4-7</span>
+                            </div>
+                            <p class="level-description">Mancata comprensione del testo. Totale fraintendimento del contenuto, incapacità di cogliere il senso del brano.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 4: Traduzione in Italiano -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">4.</span> Traduzione in Italiano
+                    <span class="criterion-weight">(Max 20 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la capacità di rendere il testo latino in italiano corretto, fluido e idiomatico, mantenendo il significato originale
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_vers" value="8" data-descriptor="Traduzione eccellente. Resa italiana perfettamente corretta, fluida e idiomatica. Scelte traduttive appropriate e raffinate. Rispetto totale del significato originale con naturalezza espressiva.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">19-20</span>
+                            </div>
+                            <p class="level-description">Traduzione eccellente. Resa italiana perfettamente corretta, fluida e idiomatica. Scelte traduttive appropriate e raffinate. Rispetto totale del significato originale con naturalezza espressiva.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_vers" value="7" data-descriptor="Buona traduzione. Resa italiana corretta e scorrevole con scelte appropriate. Qualche minima imprecisione che non compromette la comprensione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">17-18</span>
+                            </div>
+                            <p class="level-description">Buona traduzione. Resa italiana corretta e scorrevole con scelte appropriate. Qualche minima imprecisione che non compromette la comprensione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_vers" value="6" data-descriptor="Discreta traduzione. Resa italiana generalmente corretta, qualche calco dal latino e imprecisione lessicale. Comprensione preservata.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">14-16</span>
+                            </div>
+                            <p class="level-description">Discreta traduzione. Resa italiana generalmente corretta, qualche calco dal latino e imprecisione lessicale. Comprensione preservata.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_vers" value="5" data-descriptor="Traduzione sufficiente. Resa italiana comprensibile ma con diversi calchi e improprietà. Senso basilare preservato nonostante le imperfezioni.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">12-13</span>
+                            </div>
+                            <p class="level-description">Traduzione sufficiente. Resa italiana comprensibile ma con diversi calchi e improprietà. Senso basilare preservato nonostante le imperfezioni.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_vers" value="4" data-descriptor="Traduzione mediocre. Resa italiana poco scorrevole, numerosi calchi e improprietà. Comprensione parzialmente compromessa.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">9-11</span>
+                            </div>
+                            <p class="level-description">Traduzione mediocre. Resa italiana poco scorrevole, numerosi calchi e improprietà. Comprensione parzialmente compromessa.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_vers" value="3" data-descriptor="Traduzione scarsa. Resa italiana scorretta e confusa, gravi calchi e improprietà. Significato spesso frainteso.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">6-8</span>
+                            </div>
+                            <p class="level-description">Traduzione scarsa. Resa italiana scorretta e confusa, gravi calchi e improprietà. Significato spesso frainteso.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion4_vers" value="2" data-descriptor="Traduzione gravemente insufficiente. Resa italiana incomprensibile o completamente errata. Totale mancanza di corrispondenza con l'originale.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">3-5</span>
+                            </div>
+                            <p class="level-description">Traduzione gravemente insufficiente. Resa italiana incomprensibile o completamente errata. Totale mancanza di corrispondenza con l'originale.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Criterio 5: Lessico e Scelte Traduttive -->
+            <div class="criterion-section">
+                <h2 class="criterion-title">
+                    <span class="criterion-number">5.</span> Lessico e Scelte Traduttive
+                    <span class="criterion-weight">(Max 10 punti)</span>
+                </h2>
+                <p class="criterion-description">
+                    Valuta la proprietà lessicale, la ricchezza del vocabolario utilizzato, l'appropriatezza delle scelte traduttive in base al contesto
+                </p>
+                <div class="levels">
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_vers" value="8" data-descriptor="Lessico eccellente e ricco. Scelte traduttive sempre appropriate e contestualizzate. Perfetta resa delle sfumature semantiche. Uso consapevole di sinonimi e registro adeguato.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Eccellente</span>
+                                <span class="level-score">10</span>
+                            </div>
+                            <p class="level-description">Lessico eccellente e ricco. Scelte traduttive sempre appropriate e contestualizzate. Perfetta resa delle sfumature semantiche. Uso consapevole di sinonimi e registro adeguato.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_vers" value="7" data-descriptor="Buon lessico. Scelte traduttive appropriate nella maggior parte dei casi. Buona resa semantica con qualche minima imprecisione.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Buono</span>
+                                <span class="level-score">8-9</span>
+                            </div>
+                            <p class="level-description">Buon lessico. Scelte traduttive appropriate nella maggior parte dei casi. Buona resa semantica con qualche minima imprecisione.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_vers" value="6" data-descriptor="Lessico discreto. Scelte traduttive generalmente appropriate con alcune improprietà. Resa semantica accettabile.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Discreto</span>
+                                <span class="level-score">7</span>
+                            </div>
+                            <p class="level-description">Lessico discreto. Scelte traduttive generalmente appropriate con alcune improprietà. Resa semantica accettabile.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_vers" value="5" data-descriptor="Lessico sufficiente. Scelte traduttive basilari ma accettabili. Alcune improprietà che non compromettono la comprensione globale.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Sufficiente</span>
+                                <span class="level-score">6</span>
+                            </div>
+                            <p class="level-description">Lessico sufficiente. Scelte traduttive basilari ma accettabili. Alcune improprietà che non compromettono la comprensione globale.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_vers" value="4" data-descriptor="Lessico limitato. Scelte traduttive spesso improprie o troppo letterali. Diverse improprietà lessicali.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Mediocre</span>
+                                <span class="level-score">5</span>
+                            </div>
+                            <p class="level-description">Lessico limitato. Scelte traduttive spesso improprie o troppo letterali. Diverse improprietà lessicali.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_vers" value="3" data-descriptor="Lessico povero e inappropriato. Scelte traduttive inadeguate, gravi improprietà lessicali diffuse.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Insufficiente</span>
+                                <span class="level-score">3-4</span>
+                            </div>
+                            <p class="level-description">Lessico povero e inappropriato. Scelte traduttive inadeguate, gravi improprietà lessicali diffuse.</p>
+                        </div>
+                    </label>
+                    <label class="level-card">
+                        <input type="radio" name="criterion5_vers" value="2" data-descriptor="Lessico gravemente insufficiente. Totale mancanza di proprietà lessicale, scelte traduttive completamente errate.">
+                        <div class="level-content">
+                            <div class="level-header">
+                                <span class="level-name">Gravemente Insufficiente</span>
+                                <span class="level-score">1-2</span>
+                            </div>
+                            <p class="level-description">Lessico gravemente insufficiente. Totale mancanza di proprietà lessicale, scelte traduttive completamente errate.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- FINE GRIGLIA VERSIONE LATINO -->
 
         <!-- Sezione Note e Commenti -->
         <div class="notes-section">

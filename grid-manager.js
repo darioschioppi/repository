@@ -106,6 +106,32 @@ const grids = {
             criterion5_lat: 15
         },
         storageKey: 'excelRegister_latino'
+    },
+    versione: {
+        name: 'Versione di Latino',
+        criteria: 5,
+        scoreMapping: {
+            criterion1_vers: {8: 19.5, 7: 17.5, 6: 15.5, 5: 13, 4: 10, 3: 7, 2: 4},
+            criterion2_vers: {8: 24, 7: 21, 6: 18, 5: 15.5, 4: 13, 3: 9.5, 2: 5.5},
+            criterion3_vers: {8: 24, 7: 21, 6: 18, 5: 15.5, 4: 13, 3: 9.5, 2: 5.5},
+            criterion4_vers: {8: 19.5, 7: 17.5, 6: 15, 5: 12.5, 4: 10, 3: 7, 2: 4},
+            criterion5_vers: {8: 10, 7: 8.5, 6: 7, 5: 6, 4: 5, 3: 3.5, 2: 1.5}
+        },
+        criteriaNames: {
+            criterion1_vers: "Analisi Morfologica",
+            criterion2_vers: "Analisi Sintattica e Costrutti",
+            criterion3_vers: "Comprensione del Testo",
+            criterion4_vers: "Traduzione in Italiano",
+            criterion5_vers: "Lessico e Scelte Traduttive"
+        },
+        maxScores: {
+            criterion1_vers: 20,
+            criterion2_vers: 25,
+            criterion3_vers: 25,
+            criterion4_vers: 20,
+            criterion5_vers: 10
+        },
+        storageKey: 'excelRegister_versione'
     }
 };
 
@@ -114,11 +140,6 @@ let currentGrid = 'tema';
 
 // Funzione per cambiare griglia
 function selectGrid(gridType) {
-    if (gridType === 'analisi' || gridType === 'commento') {
-        alert('Questa griglia sarà disponibile prossimamente!');
-        return;
-    }
-
     // Aggiorna griglia corrente
     currentGrid = gridType;
 
