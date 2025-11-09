@@ -1,6 +1,51 @@
 // Multi-Grid Modifications
 // Sovrascrive funzioni di script.js per supportare multiple griglie
 
+// Funzione per aggiornare le note del docente con i descrittori selezionati
+function updateTeacherNotesWithDescriptors() {
+    const config = getCurrentGridConfig();
+    const criteriaKeys = Object.keys(config.scoreMapping);
+    const notesTextarea = document.getElementById('teacherNotes');
+
+    // Raccoglie tutti i descrittori selezionati
+    let notesContent = '';
+
+    criteriaKeys.forEach(criterionKey => {
+        const selectedRadio = document.querySelector(`input[name="${criterionKey}"]:checked`);
+        if (selectedRadio) {
+            const descriptor = selectedRadio.dataset.descriptor;
+            const criterionName = config.criteriaNames[criterionKey];
+
+            if (descriptor) {
+                notesContent += `${criterionName}: ${descriptor}\n\n`;
+            }
+        }
+    });
+
+    // Aggiorna il textarea solo se ci sono descrittori
+    if (notesContent.trim()) {
+        notesTextarea.value = notesContent.trim();
+    }
+}
+
+// Inizializza gli event listener per i radio button
+function initializeRadioListeners() {
+    // Aggiungi listener a tutti i radio button
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Quando cambia una selezione, aggiorna le note
+            updateTeacherNotesWithDescriptors();
+        });
+    });
+}
+
+// Chiamata inizializzazione quando il DOM è pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeRadioListeners);
+} else {
+    initializeRadioListeners();
+}
+
 // Calcola il punteggio totale (VERSIONE MULTI-GRIGLIA)
 function calculateScore() {
     let totalScore = 0;

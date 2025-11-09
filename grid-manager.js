@@ -193,6 +193,11 @@ function resetFormForNewGrid() {
     document.getElementById('className').value = className;
     document.getElementById('assignmentDate').value = date;
 
+    // Reinizializza i listener per la nuova griglia
+    if (typeof initializeRadioListeners === 'function') {
+        initializeRadioListeners();
+    }
+
     showNotification(`Griglia cambiata: ${grids[currentGrid].name}`);
 }
 

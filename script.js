@@ -300,6 +300,11 @@ function resetForm() {
 
         // Cancella localStorage corrente
         localStorage.removeItem('currentEvaluation');
+
+        // Reinizializza i listener per i radio button
+        if (typeof initializeRadioListeners === 'function') {
+            initializeRadioListeners();
+        }
     }
 }
 
