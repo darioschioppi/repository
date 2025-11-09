@@ -198,6 +198,14 @@ function resetFormForNewGrid() {
         initializeRadioListeners();
     }
 
+    // Reset stato modifica
+    if (typeof editingEvaluationIndex !== 'undefined') {
+        editingEvaluationIndex = null;
+    }
+    if (typeof updateEditButtonState === 'function') {
+        updateEditButtonState();
+    }
+
     showNotification(`Griglia cambiata: ${grids[currentGrid].name}`);
 }
 

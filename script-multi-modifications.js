@@ -1,6 +1,9 @@
 // Multi-Grid Modifications
 // Sovrascrive funzioni di script.js per supportare multiple griglie
 
+// Stato di modifica: traccia se stiamo modificando una valutazione esistente
+let editingEvaluationIndex = null;
+
 // Funzione per aggiornare le note del docente con i descrittori selezionati
 function updateTeacherNotesWithDescriptors() {
     const config = getCurrentGridConfig();
@@ -91,7 +94,7 @@ function calculateScore() {
     updateLocalStorage();
 }
 
-// Aggiungi valutazione corrente al registro Excel (VERSIONE MULTI-GRIGLIA)
+// Aggiungi o modifica valutazione corrente al registro Excel (VERSIONE MULTI-GRIGLIA)
 function addToExcelRegister() {
     const config = getCurrentGridConfig();
     const studentName = document.getElementById('studentName').value;
@@ -110,7 +113,6 @@ function addToExcelRegister() {
 
     // Crea oggetto valutazione
     const evaluation = {
-        id: Date.now(),
         gridType: currentGrid,
         gridName: config.name,
         studentName: studentName,
@@ -132,6 +134,7 @@ function addToExcelRegister() {
         if (selectedRadio) {
             evaluation.scores[criterionKey] = {
                 score: config.scoreMapping[criterionKey][parseInt(selectedRadio.value)],
+                level: parseInt(selectedRadio.value),
                 descriptor: selectedRadio.dataset.descriptor,
                 criterionName: config.criteriaNames[criterionKey]
             };
@@ -142,14 +145,33 @@ function addToExcelRegister() {
     const storageKey = getCurrentStorageKey();
     let register = JSON.parse(localStorage.getItem(storageKey) || '[]');
 
-    // Aggiungi nuova valutazione
-    register.push(evaluation);
+    // Verifica se stiamo modificando o aggiungendo
+    if (editingEvaluationIndex !== null && editingEvaluationIndex >= 0) {
+        // MODIFICA valutazione esistente
+        // Mantieni l'ID originale se esiste
+        evaluation.id = register[editingEvaluationIndex].id || Date.now();
+        register[editingEvaluationIndex] = evaluation;
 
-    // Salva nel localStorage
-    localStorage.setItem(storageKey, JSON.stringify(register));
+        // Salva nel localStorage
+        localStorage.setItem(storageKey, JSON.stringify(register));
 
-    // Mostra conferma
-    showNotification(`✅ Valutazione di ${studentName} aggiunta al registro ${config.name}! Totale: ${register.length} valutazioni.`);
+        // Mostra conferma
+        showNotification(`✏️ Valutazione di ${studentName} modificata con successo!`);
+
+        // Reset stato modifica
+        editingEvaluationIndex = null;
+        updateEditButtonState();
+    } else {
+        // AGGIUNGI nuova valutazione
+        evaluation.id = Date.now();
+        register.push(evaluation);
+
+        // Salva nel localStorage
+        localStorage.setItem(storageKey, JSON.stringify(register));
+
+        // Mostra conferma
+        showNotification(`✅ Valutazione di ${studentName} aggiunta al registro ${config.name}! Totale: ${register.length} valutazioni.`);
+    }
 
     // Aggiorna visualizzazione registro
     updateRegisterDisplay();
@@ -157,6 +179,8 @@ function addToExcelRegister() {
     // Reset form per nuova valutazione
     if (confirm('Valutazione salvata! Vuoi iniziare una nuova valutazione?')) {
         resetForm();
+        editingEvaluationIndex = null;
+        updateEditButtonState();
     }
 }
 
@@ -207,6 +231,7 @@ function updateRegisterDisplay() {
             <td class="judgment-cell">${evaluation.judgment}</td>
             <td class="actions-cell">
                 <button class="btn-icon" onclick="viewEvaluation(${index})" title="Visualizza">👁️</button>
+                <button class="btn-icon" onclick="editEvaluation(${index})" title="Modifica">✏️</button>
                 <button class="btn-icon" onclick="deleteEvaluation(${index})" title="Elimina">🗑️</button>
             </td>
         `;
@@ -411,6 +436,50 @@ function viewEvaluation(index) {
     alert(details);
 }
 
+// Modifica valutazione esistente (VERSIONE MULTI-GRIGLIA)
+function editEvaluation(index) {
+    const config = getCurrentGridConfig();
+    const storageKey = getCurrentStorageKey();
+    const register = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    const evaluation = register[index];
+
+    if (!evaluation) return;
+
+    // Imposta l'indice di modifica
+    editingEvaluationIndex = index;
+
+    // Carica dati nel form
+    document.getElementById('studentName').value = evaluation.studentName;
+    document.getElementById('className').value = evaluation.className;
+    document.getElementById('assignmentDate').value = evaluation.date;
+    document.getElementById('topic').value = evaluation.topic;
+    document.getElementById('teacherNotes').value = evaluation.notes;
+
+    // Carica le selezioni dei criteri
+    const criteriaKeys = Object.keys(config.scoreMapping);
+    criteriaKeys.forEach(criterionKey => {
+        const score = evaluation.scores[criterionKey];
+        if (score && score.level) {
+            // Seleziona il radio button corrispondente
+            const radio = document.querySelector(`input[name="${criterionKey}"][value="${score.level}"]`);
+            if (radio) {
+                radio.checked = true;
+            }
+        }
+    });
+
+    // Ricalcola il punteggio per aggiornare la visualizzazione
+    calculateScore();
+
+    // Aggiorna stato pulsante
+    updateEditButtonState();
+
+    // Scroll alla sezione valutazione
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    showNotification(`✏️ Modifica della valutazione di ${evaluation.studentName}. Modifica i dati e clicca su "Aggiungi a Registro Excel" per salvare le modifiche.`);
+}
+
 // Elimina valutazione specifica (VERSIONE MULTI-GRIGLIA)
 function deleteEvaluation(index) {
     const storageKey = getCurrentStorageKey();
@@ -438,4 +507,42 @@ function clearRegister() {
             showNotification(`🗑️ Registro "${config.name}" svuotato completamente.`);
         }
     }
+}
+
+// Aggiorna lo stato visuale del pulsante quando si modifica
+function updateEditButtonState() {
+    const addButton = document.querySelector('button[onclick="addToExcelRegister()"]');
+    const cancelButton = document.getElementById('cancelEditBtn');
+
+    if (!addButton) return;
+
+    if (editingEvaluationIndex !== null && editingEvaluationIndex >= 0) {
+        // Modalità modifica
+        addButton.innerHTML = '✏️ Salva Modifiche al Registro';
+        addButton.style.backgroundColor = '#ff9800';
+        addButton.style.borderColor = '#ff9800';
+
+        // Mostra pulsante annulla
+        if (cancelButton) {
+            cancelButton.style.display = 'inline-block';
+        }
+    } else {
+        // Modalità normale
+        addButton.innerHTML = '📊 Aggiungi a Registro Excel';
+        addButton.style.backgroundColor = '';
+        addButton.style.borderColor = '';
+
+        // Nascondi pulsante annulla
+        if (cancelButton) {
+            cancelButton.style.display = 'none';
+        }
+    }
+}
+
+// Annulla modifica e torna alla modalità aggiunta
+function cancelEdit() {
+    editingEvaluationIndex = null;
+    updateEditButtonState();
+    resetForm();
+    showNotification('❌ Modifica annullata.');
 }

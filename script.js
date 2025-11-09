@@ -305,6 +305,14 @@ function resetForm() {
         if (typeof initializeRadioListeners === 'function') {
             initializeRadioListeners();
         }
+
+        // Reset stato modifica
+        if (typeof editingEvaluationIndex !== 'undefined') {
+            editingEvaluationIndex = null;
+        }
+        if (typeof updateEditButtonState === 'function') {
+            updateEditButtonState();
+        }
     }
 }
 

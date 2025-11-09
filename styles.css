@@ -533,6 +533,17 @@ header h1 {
     box-shadow: var(--shadow-hover);
 }
 
+.btn-warning {
+    background: #f39c12;
+    color: var(--white);
+}
+
+.btn-warning:hover {
+    background: #e67e22;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
 .btn-small {
     padding: 8px 15px;
     font-size: 0.85rem;
