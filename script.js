@@ -298,6 +298,7 @@ function resetForm() {
         if (gradeInput) {
             gradeInput.value = '';
             gradeInput.readOnly = true;
+            gradeInput.removeAttribute('data-numeric-value');
         }
         document.getElementById('judgment').textContent = '-';
         document.getElementById('breakdown').innerHTML = '';

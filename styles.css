@@ -401,7 +401,7 @@ header h1 {
     color: #ffd700;
     font-size: 2rem;
     font-weight: bold;
-    width: 100px;
+    width: 120px;
     text-align: center;
     padding: 8px;
     border-radius: 8px;
@@ -428,18 +428,6 @@ header h1 {
 
 .grade-input::placeholder {
     color: rgba(255, 215, 0, 0.3);
-}
-
-/* Chrome, Safari, Edge, Opera - remove arrows */
-.grade-input::-webkit-outer-spin-button,
-.grade-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox - remove arrows */
-.grade-input[type=number] {
-    -moz-appearance: textfield;
 }
 
 .btn-edit-grade {

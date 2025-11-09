@@ -7,6 +7,24 @@ let editingEvaluationIndex = null;
 // Stato modifica voto: traccia se il voto è stato modificato manualmente
 let gradeManuallyEdited = false;
 
+// Funzione per convertire voto con +/- in valore numerico
+function parseGradeWithSymbols(gradeString) {
+    gradeString = gradeString.trim();
+
+    // Gestione voti con + e -
+    // 7+ = 7.25, 7- = 6.75, 7 = 7, 6.5 = 6.5
+    if (gradeString.endsWith('+')) {
+        const baseGrade = parseInt(gradeString.slice(0, -1));
+        return baseGrade + 0.25;
+    } else if (gradeString.endsWith('-')) {
+        const baseGrade = parseInt(gradeString.slice(0, -1));
+        return baseGrade - 0.25;
+    } else {
+        // Numero normale (7 o 7.5)
+        return parseFloat(gradeString);
+    }
+}
+
 // Funzione per abilitare/disabilitare modifica voto manuale
 function toggleGradeEdit() {
     const gradeInput = document.getElementById('finalGrade');
@@ -22,17 +40,27 @@ function toggleGradeEdit() {
         editButton.title = 'Conferma voto';
     } else {
         // Disabilita modifica e valida
-        const value = parseFloat(gradeInput.value);
+        const inputValue = gradeInput.value.trim();
 
-        // Validazione
-        if (isNaN(value) || value < 1 || value > 10) {
-            alert('⚠️ Inserisci un voto valido tra 1 e 10 (mezzi voti consentiti: es. 6.5, 7.5)');
+        // Validazione formato
+        const validFormats = /^(10|[1-9])(\+|\-)?$|^[1-9]\.[05]$/;
+        if (!validFormats.test(inputValue)) {
+            alert('⚠️ Formato voto non valido!\n\nFormati accettati:\n• Voto intero: 6, 7, 8\n• Voto con +/-: 6+, 7-, 8+\n• Voto decimale: 6.5, 7.5, 8.5');
             return;
         }
 
-        // Arrotonda ai mezzi voti (0.5)
-        const roundedValue = Math.round(value * 2) / 2;
-        gradeInput.value = roundedValue;
+        // Converti in valore numerico
+        const numericValue = parseGradeWithSymbols(inputValue);
+
+        // Validazione range
+        if (isNaN(numericValue) || numericValue < 1 || numericValue > 10) {
+            alert('⚠️ Il voto deve essere tra 1 e 10');
+            return;
+        }
+
+        // Mantieni il formato originale (con +/-) per la visualizzazione
+        gradeInput.value = inputValue;
+        gradeInput.dataset.numericValue = numericValue;
 
         gradeInput.readOnly = true;
         editButton.textContent = '✏️';
@@ -42,10 +70,19 @@ function toggleGradeEdit() {
         gradeManuallyEdited = true;
 
         // Aggiorna giudizio basato sul voto modificato
-        updateJudgmentFromGrade(roundedValue);
+        updateJudgmentFromGrade(numericValue);
 
-        showNotification(`✏️ Voto modificato manualmente: ${roundedValue}/10`);
+        showNotification(`✏️ Voto modificato manualmente: ${inputValue}/10 (${numericValue})`);
     }
+}
+
+// Ottieni valore numerico del voto (gestisce +/-)
+function getNumericGrade() {
+    const gradeInput = document.getElementById('finalGrade');
+    if (gradeInput.dataset.numericValue) {
+        return parseFloat(gradeInput.dataset.numericValue);
+    }
+    return parseGradeWithSymbols(gradeInput.value);
 }
 
 // Aggiorna giudizio in base al voto
@@ -150,7 +187,7 @@ function calculateScore() {
     } else {
         // Se modificato manualmente, mantieni il voto modificato
         // ma aggiorna il giudizio in base al voto corrente
-        const currentGrade = parseFloat(document.getElementById('finalGrade').value);
+        const currentGrade = getNumericGrade();
         if (!isNaN(currentGrade)) {
             updateJudgmentFromGrade(currentGrade);
         }
@@ -545,8 +582,14 @@ function editEvaluation(index) {
     // Se il voto era stato modificato manualmente, ripristinalo
     if (evaluation.gradeManuallyEdited) {
         gradeManuallyEdited = true;
-        document.getElementById('finalGrade').value = evaluation.grade;
-        updateJudgmentFromGrade(parseFloat(evaluation.grade));
+        const gradeInput = document.getElementById('finalGrade');
+        gradeInput.value = evaluation.grade;
+
+        // Calcola e memorizza il valore numerico
+        const numericValue = parseGradeWithSymbols(evaluation.grade);
+        gradeInput.dataset.numericValue = numericValue;
+
+        updateJudgmentFromGrade(numericValue);
     }
 
     // Aggiorna stato pulsante
