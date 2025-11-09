@@ -637,7 +637,7 @@ function printRegisterAsPDF() {
         .student-info {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 12px 20px;
+            padding: 15px 20px;
             border-radius: 8px;
             margin-bottom: 15px;
             box-shadow: 0 3px 5px rgba(0,0,0,0.1);
@@ -646,7 +646,7 @@ function printRegisterAsPDF() {
         .student-name {
             font-size: 22px;
             font-weight: bold;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .student-details {
@@ -654,50 +654,38 @@ function printRegisterAsPDF() {
             justify-content: space-between;
             font-size: 12px;
             opacity: 0.95;
+            margin-bottom: 8px;
+        }
+
+        .student-topic {
+            font-size: 11px;
+            opacity: 0.9;
+            font-style: italic;
+            margin-top: 5px;
         }
 
         .grade-section {
             background: #f8f9fa;
             border-left: 4px solid #27ae60;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
             border-radius: 4px;
+            text-align: center;
         }
 
         .grade-label {
-            font-size: 11px;
+            font-size: 12px;
             color: #7f8c8d;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .grade-value {
-            font-size: 36px;
+            font-size: 48px;
             font-weight: bold;
             color: #27ae60;
             line-height: 1;
-            margin-bottom: 4px;
-        }
-
-        .judgment {
-            font-size: 15px;
-            color: #2c3e50;
-            font-style: italic;
-        }
-
-        .score-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #bdc3c7;
-        }
-
-        .score-item {
-            font-size: 12px;
-            color: #34495e;
         }
 
         .notes-section {
@@ -706,7 +694,7 @@ function printRegisterAsPDF() {
             border: 1.5px solid #e0e0e0;
             border-radius: 4px;
             padding: 15px;
-            max-height: 380px;
+            max-height: 450px;
             overflow: hidden;
         }
 
@@ -724,7 +712,7 @@ function printRegisterAsPDF() {
             color: #2c3e50;
             white-space: pre-wrap;
             line-height: 1.5;
-            max-height: 320px;
+            max-height: 390px;
             overflow: hidden;
         }
 
@@ -778,16 +766,12 @@ function printRegisterAsPDF() {
                 <span>📚 Classe: ${evaluation.className}</span>
                 <span>📅 Data: ${formatDateShort(evaluation.date)}</span>
             </div>
+            <div class="student-topic">📝 Traccia: ${evaluation.topic}</div>
         </div>
 
         <div class="grade-section">
             <div class="grade-label">Valutazione Finale</div>
             <div class="grade-value">${evaluation.grade}/10</div>
-            <div class="judgment">${evaluation.judgment}</div>
-            <div class="score-details">
-                <div class="score-item"><strong>Punteggio:</strong> ${evaluation.totalScore}/100</div>
-                <div class="score-item"><strong>Traccia:</strong> ${evaluation.topic}</div>
-            </div>
         </div>
 
         <div class="notes-section">
