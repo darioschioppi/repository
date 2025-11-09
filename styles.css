@@ -395,6 +395,78 @@ header h1 {
     color: #ffd700;
 }
 
+.grade-input {
+    background: rgba(255, 215, 0, 0.1);
+    border: 2px solid #ffd700;
+    color: #ffd700;
+    font-size: 2rem;
+    font-weight: bold;
+    width: 100px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+.grade-input:read-only {
+    cursor: default;
+    background: rgba(255, 215, 0, 0.05);
+}
+
+.grade-input:not(:read-only) {
+    background: rgba(255, 215, 0, 0.2);
+    cursor: text;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.grade-input:not(:read-only):focus {
+    outline: none;
+    border-color: #ffed4e;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.grade-input::placeholder {
+    color: rgba(255, 215, 0, 0.3);
+}
+
+/* Chrome, Safari, Edge, Opera - remove arrows */
+.grade-input::-webkit-outer-spin-button,
+.grade-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox - remove arrows */
+.grade-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.btn-edit-grade {
+    background: #f39c12;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.btn-edit-grade:hover {
+    background: #e67e22;
+    transform: scale(1.05);
+}
+
+.btn-edit-grade.editing {
+    background: #27ae60;
+}
+
+.btn-edit-grade.editing:hover {
+    background: #229954;
+}
+
 .judgment {
     font-size: 1.5rem;
     text-transform: uppercase;

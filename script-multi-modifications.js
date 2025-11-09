@@ -4,6 +4,66 @@
 // Stato di modifica: traccia se stiamo modificando una valutazione esistente
 let editingEvaluationIndex = null;
 
+// Stato modifica voto: traccia se il voto è stato modificato manualmente
+let gradeManuallyEdited = false;
+
+// Funzione per abilitare/disabilitare modifica voto manuale
+function toggleGradeEdit() {
+    const gradeInput = document.getElementById('finalGrade');
+    const editButton = document.getElementById('btnEditGrade');
+
+    if (gradeInput.readOnly) {
+        // Abilita modifica
+        gradeInput.readOnly = false;
+        gradeInput.focus();
+        gradeInput.select();
+        editButton.textContent = '✓';
+        editButton.classList.add('editing');
+        editButton.title = 'Conferma voto';
+    } else {
+        // Disabilita modifica e valida
+        const value = parseFloat(gradeInput.value);
+
+        // Validazione
+        if (isNaN(value) || value < 1 || value > 10) {
+            alert('⚠️ Inserisci un voto valido tra 1 e 10 (mezzi voti consentiti: es. 6.5, 7.5)');
+            return;
+        }
+
+        // Arrotonda ai mezzi voti (0.5)
+        const roundedValue = Math.round(value * 2) / 2;
+        gradeInput.value = roundedValue;
+
+        gradeInput.readOnly = true;
+        editButton.textContent = '✏️';
+        editButton.classList.remove('editing');
+        editButton.title = 'Modifica voto manualmente';
+
+        gradeManuallyEdited = true;
+
+        // Aggiorna giudizio basato sul voto modificato
+        updateJudgmentFromGrade(roundedValue);
+
+        showNotification(`✏️ Voto modificato manualmente: ${roundedValue}/10`);
+    }
+}
+
+// Aggiorna giudizio in base al voto
+function updateJudgmentFromGrade(grade) {
+    let judgment = '';
+
+    if (grade >= 9) judgment = 'Eccellente';
+    else if (grade >= 8) judgment = 'Ottimo';
+    else if (grade >= 7) judgment = 'Buono';
+    else if (grade >= 6) judgment = 'Discreto';
+    else if (grade >= 5.5) judgment = 'Sufficiente';
+    else if (grade >= 4.5) judgment = 'Mediocre';
+    else if (grade >= 3) judgment = 'Insufficiente';
+    else judgment = 'Gravemente Insufficiente';
+
+    document.getElementById('judgment').textContent = judgment;
+}
+
 // Funzione per aggiornare le note del docente con i descrittori selezionati
 function updateTeacherNotesWithDescriptors() {
     const config = getCurrentGridConfig();
@@ -79,13 +139,22 @@ function calculateScore() {
     // Aggiorna visualizzazione
     document.getElementById('totalScore').textContent = totalScore;
 
-    // Calcola voto in decimi
-    const grade = calculateGrade(totalScore);
-    document.getElementById('finalGrade').textContent = grade;
+    // Calcola voto in decimi SOLO se non è stato modificato manualmente
+    if (!gradeManuallyEdited) {
+        const grade = calculateGrade(totalScore);
+        document.getElementById('finalGrade').value = grade;
 
-    // Determina giudizio
-    const judgment = getJudgment(totalScore);
-    document.getElementById('judgment').textContent = judgment;
+        // Determina giudizio
+        const judgment = getJudgment(totalScore);
+        document.getElementById('judgment').textContent = judgment;
+    } else {
+        // Se modificato manualmente, mantieni il voto modificato
+        // ma aggiorna il giudizio in base al voto corrente
+        const currentGrade = parseFloat(document.getElementById('finalGrade').value);
+        if (!isNaN(currentGrade)) {
+            updateJudgmentFromGrade(currentGrade);
+        }
+    }
 
     // Mostra breakdown
     displayBreakdown(breakdown, totalScore);
@@ -121,9 +190,10 @@ function addToExcelRegister() {
         topic: document.getElementById('topic').value || 'N/A',
         scores: {},
         totalScore: parseFloat(totalScore),
-        grade: document.getElementById('finalGrade').textContent,
+        grade: document.getElementById('finalGrade').value,
         judgment: document.getElementById('judgment').textContent,
         notes: document.getElementById('teacherNotes').value || '',
+        gradeManuallyEdited: gradeManuallyEdited,
         timestamp: new Date().toISOString()
     };
 
@@ -180,6 +250,7 @@ function addToExcelRegister() {
     if (confirm('Valutazione salvata! Vuoi iniziare una nuova valutazione?')) {
         resetForm();
         editingEvaluationIndex = null;
+        gradeManuallyEdited = false;
         updateEditButtonState();
     }
 }
@@ -470,6 +541,13 @@ function editEvaluation(index) {
 
     // Ricalcola il punteggio per aggiornare la visualizzazione
     calculateScore();
+
+    // Se il voto era stato modificato manualmente, ripristinalo
+    if (evaluation.gradeManuallyEdited) {
+        gradeManuallyEdited = true;
+        document.getElementById('finalGrade').value = evaluation.grade;
+        updateJudgmentFromGrade(parseFloat(evaluation.grade));
+    }
 
     // Aggiorna stato pulsante
     updateEditButtonState();

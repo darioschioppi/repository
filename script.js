@@ -294,9 +294,21 @@ function resetForm() {
 
         // Reset punteggi
         document.getElementById('totalScore').textContent = '0';
-        document.getElementById('finalGrade').textContent = '-';
+        const gradeInput = document.getElementById('finalGrade');
+        if (gradeInput) {
+            gradeInput.value = '';
+            gradeInput.readOnly = true;
+        }
         document.getElementById('judgment').textContent = '-';
         document.getElementById('breakdown').innerHTML = '';
+
+        // Reset pulsante modifica voto
+        const editGradeBtn = document.getElementById('btnEditGrade');
+        if (editGradeBtn) {
+            editGradeBtn.textContent = '✏️';
+            editGradeBtn.classList.remove('editing');
+            editGradeBtn.title = 'Modifica voto manualmente';
+        }
 
         // Cancella localStorage corrente
         localStorage.removeItem('currentEvaluation');
@@ -309,6 +321,9 @@ function resetForm() {
         // Reset stato modifica
         if (typeof editingEvaluationIndex !== 'undefined') {
             editingEvaluationIndex = null;
+        }
+        if (typeof gradeManuallyEdited !== 'undefined') {
+            gradeManuallyEdited = false;
         }
         if (typeof updateEditButtonState === 'function') {
             updateEditButtonState();
