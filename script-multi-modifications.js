@@ -577,7 +577,7 @@ function printRegisterAsPDF() {
     <style>
         @page {
             size: A4;
-            margin: 20mm;
+            margin: 15mm;
         }
 
         * {
@@ -589,14 +589,15 @@ function printRegisterAsPDF() {
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.4;
         }
 
         .page {
             width: 100%;
             min-height: 100vh;
+            max-height: 100vh;
             page-break-after: always;
-            padding: 30px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
         }
@@ -607,28 +608,28 @@ function printRegisterAsPDF() {
 
         .header {
             text-align: center;
-            border-bottom: 3px solid #2c3e50;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .school-name {
-            font-size: 14px;
+            font-size: 11px;
             color: #7f8c8d;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
+            letter-spacing: 1.5px;
+            margin-bottom: 3px;
         }
 
         .document-title {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .grid-type {
-            font-size: 16px;
+            font-size: 13px;
             color: #34495e;
             font-style: italic;
         }
@@ -636,51 +637,51 @@ function printRegisterAsPDF() {
         .student-info {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
         }
 
         .student-name {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
         .student-details {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
+            font-size: 12px;
             opacity: 0.95;
         }
 
         .grade-section {
             background: #f8f9fa;
-            border-left: 5px solid #27ae60;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
         }
 
         .grade-label {
-            font-size: 14px;
+            font-size: 11px;
             color: #7f8c8d;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
         }
 
         .grade-value {
-            font-size: 48px;
+            font-size: 36px;
             font-weight: bold;
             color: #27ae60;
             line-height: 1;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .judgment {
-            font-size: 18px;
+            font-size: 15px;
             color: #2c3e50;
             font-style: italic;
         }
@@ -688,48 +689,51 @@ function printRegisterAsPDF() {
         .score-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 15px;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 1px solid #bdc3c7;
         }
 
         .score-item {
-            font-size: 14px;
+            font-size: 12px;
             color: #34495e;
         }
 
         .notes-section {
             flex-grow: 1;
             background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            padding: 25px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            max-height: 380px;
+            overflow: hidden;
         }
 
         .notes-title {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
             border-bottom: 2px solid #3498db;
         }
 
         .notes-content {
-            font-size: 14px;
+            font-size: 11px;
             color: #2c3e50;
             white-space: pre-wrap;
-            line-height: 1.8;
-            min-height: 200px;
+            line-height: 1.5;
+            max-height: 320px;
+            overflow: hidden;
         }
 
         .footer {
             margin-top: auto;
-            padding-top: 20px;
+            padding-top: 10px;
             border-top: 1px solid #bdc3c7;
             text-align: center;
-            font-size: 11px;
+            font-size: 9px;
             color: #95a5a6;
         }
 
