@@ -546,3 +546,273 @@ function cancelEdit() {
     resetForm();
     showNotification('❌ Modifica annullata.');
 }
+
+// Stampa registro completo in PDF (1 foglio A4 per studente)
+function printRegisterAsPDF() {
+    const config = getCurrentGridConfig();
+    const storageKey = getCurrentStorageKey();
+    const register = JSON.parse(localStorage.getItem(storageKey) || '[]');
+
+    if (register.length === 0) {
+        alert('⚠️ Il registro è vuoto. Aggiungi almeno una valutazione prima di stampare.');
+        return;
+    }
+
+    // Crea una nuova finestra per la stampa
+    const printWindow = window.open('', '_blank');
+
+    if (!printWindow) {
+        alert('⚠️ Impossibile aprire la finestra di stampa. Verifica le impostazioni del popup blocker.');
+        return;
+    }
+
+    // Genera HTML per la stampa
+    let htmlContent = `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Valutazioni - ${config.name}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .page {
+            width: 100%;
+            min-height: 100vh;
+            page-break-after: always;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .school-name {
+            font-size: 14px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .document-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .grid-type {
+            font-size: 16px;
+            color: #34495e;
+            font-style: italic;
+        }
+
+        .student-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .student-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .student-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .grade-section {
+            background: #f8f9fa;
+            border-left: 5px solid #27ae60;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .grade-label {
+            font-size: 14px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .grade-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #27ae60;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .judgment {
+            font-size: 18px;
+            color: #2c3e50;
+            font-style: italic;
+        }
+
+        .score-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #bdc3c7;
+        }
+
+        .score-item {
+            font-size: 14px;
+            color: #34495e;
+        }
+
+        .notes-section {
+            flex-grow: 1;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 25px;
+        }
+
+        .notes-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .notes-content {
+            font-size: 14px;
+            color: #2c3e50;
+            white-space: pre-wrap;
+            line-height: 1.8;
+            min-height: 200px;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #bdc3c7;
+            text-align: center;
+            font-size: 11px;
+            color: #95a5a6;
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page {
+                page-break-after: always;
+            }
+
+            .page:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+`;
+
+    // Genera una pagina per ogni studente
+    register.forEach((evaluation, index) => {
+        const date = new Date().toLocaleDateString('it-IT', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        htmlContent += `
+    <div class="page">
+        <div class="header">
+            <div class="school-name">Liceo delle Scienze Umane</div>
+            <div class="document-title">Scheda di Valutazione</div>
+            <div class="grid-type">${config.name}</div>
+        </div>
+
+        <div class="student-info">
+            <div class="student-name">${evaluation.studentName}</div>
+            <div class="student-details">
+                <span>📚 Classe: ${evaluation.className}</span>
+                <span>📅 Data: ${formatDateShort(evaluation.date)}</span>
+            </div>
+        </div>
+
+        <div class="grade-section">
+            <div class="grade-label">Valutazione Finale</div>
+            <div class="grade-value">${evaluation.grade}/10</div>
+            <div class="judgment">${evaluation.judgment}</div>
+            <div class="score-details">
+                <div class="score-item"><strong>Punteggio:</strong> ${evaluation.totalScore}/100</div>
+                <div class="score-item"><strong>Traccia:</strong> ${evaluation.topic}</div>
+            </div>
+        </div>
+
+        <div class="notes-section">
+            <div class="notes-title">📝 Note e Commenti del Docente</div>
+            <div class="notes-content">${evaluation.notes || 'Nessuna nota disponibile.'}</div>
+        </div>
+
+        <div class="footer">
+            Documento generato il ${date} - Pagina ${index + 1} di ${register.length}
+        </div>
+    </div>
+`;
+    });
+
+    htmlContent += `
+</body>
+</html>
+`;
+
+    // Scrivi il contenuto nella finestra di stampa
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+
+    // Attendi che il contenuto sia caricato e poi stampa
+    printWindow.onload = function() {
+        printWindow.focus();
+        setTimeout(() => {
+            printWindow.print();
+            showNotification(`📄 Apertura finestra stampa PDF con ${register.length} studenti...`);
+        }, 250);
+    };
+}
